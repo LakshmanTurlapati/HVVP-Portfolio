@@ -109,47 +109,47 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HERO-01 | Pending | Pending |
-| HERO-02 | Pending | Pending |
-| HERO-03 | Pending | Pending |
-| HERO-04 | Pending | Pending |
-| HERO-05 | Pending | Pending |
-| ABOUT-01 | Pending | Pending |
-| ABOUT-02 | Pending | Pending |
-| EXP-01 | Pending | Pending |
-| EXP-02 | Pending | Pending |
-| EXP-03 | Pending | Pending |
-| SKILL-01 | Pending | Pending |
-| SKILL-02 | Pending | Pending |
-| SKILL-03 | Pending | Pending |
-| LEAD-01 | Pending | Pending |
-| LEAD-02 | Pending | Pending |
-| LEAD-03 | Pending | Pending |
-| CONT-01 | Pending | Pending |
-| CONT-02 | Pending | Pending |
-| CONT-03 | Pending | Pending |
-| NAV-01 | Pending | Pending |
-| NAV-02 | Pending | Pending |
-| NAV-03 | Pending | Pending |
-| NAV-04 | Pending | Pending |
-| DES-01 | Pending | Pending |
-| DES-02 | Pending | Pending |
-| DES-03 | Pending | Pending |
-| DES-04 | Pending | Pending |
-| DES-05 | Pending | Pending |
-| POL-01 | Pending | Pending |
-| POL-02 | Pending | Pending |
-| POL-03 | Pending | Pending |
-| POL-04 | Pending | Pending |
-| POL-05 | Pending | Pending |
-| POL-06 | Pending | Pending |
-| POL-07 | Pending | Pending |
+| HERO-01 | Phase 2 | Pending |
+| HERO-02 | Phase 2 | Pending |
+| HERO-03 | Phase 2 | Pending |
+| HERO-04 | Phase 2 | Pending |
+| HERO-05 | Phase 2 | Pending |
+| ABOUT-01 | Phase 2 | Pending |
+| ABOUT-02 | Phase 2 | Pending |
+| EXP-01 | Phase 2 | Pending |
+| EXP-02 | Phase 2 | Pending |
+| EXP-03 | Phase 2 | Pending |
+| SKILL-01 | Phase 2 | Pending |
+| SKILL-02 | Phase 2 | Pending |
+| SKILL-03 | Phase 2 | Pending |
+| LEAD-01 | Phase 2 | Pending |
+| LEAD-02 | Phase 2 | Pending |
+| LEAD-03 | Phase 2 | Pending |
+| CONT-01 | Phase 2 | Pending |
+| CONT-02 | Phase 2 | Pending |
+| CONT-03 | Phase 2 | Pending |
+| NAV-01 | Phase 3 | Pending |
+| NAV-02 | Phase 3 | Pending |
+| NAV-03 | Phase 3 | Pending |
+| NAV-04 | Phase 3 | Pending |
+| DES-01 | Phase 1 | Pending |
+| DES-02 | Phase 1 | Pending |
+| DES-03 | Phase 1 | Pending |
+| DES-04 | Phase 1 | Pending |
+| DES-05 | Phase 2 | Pending |
+| POL-01 | Phase 4 | Pending |
+| POL-02 | Phase 1 | Pending |
+| POL-03 | Phase 1 | Pending |
+| POL-04 | Phase 4 | Pending |
+| POL-05 | Phase 4 | Pending |
+| POL-06 | Phase 1 | Pending |
+| POL-07 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 35 total
-- Mapped to phases: 0
-- Unmapped: 35
+- Mapped to phases: 35
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-03*
-*Last updated: 2026-04-03 after initial definition*
+*Last updated: 2026-04-03 after roadmap creation — all 35 v1 requirements mapped*
