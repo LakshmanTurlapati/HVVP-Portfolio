@@ -1,0 +1,155 @@
+# Requirements: Harsha Vardhini Portfolio
+
+**Defined:** 2026-04-03
+**Core Value:** A polished, professional online presence that makes hiring managers want to reach out
+
+## v1 Requirements
+
+Requirements for initial release. Each maps to roadmap phases.
+
+### Hero
+
+- [ ] **HERO-01**: Page displays Harsha's full name prominently as the primary heading
+- [ ] **HERO-02**: Tagline communicates specialization ("Data-Driven Digital Marketing Professional | SEO, Social Media, Campaign Optimization")
+- [ ] **HERO-03**: CTA buttons link to contact section and downloadable resume PDF
+- [ ] **HERO-04**: Availability statement visible ("Open to full-time roles | US work authorized for up to 36 months")
+- [ ] **HERO-05**: 3-5 headline metrics displayed prominently (e.g., "40% traffic increase", "25% lead growth")
+
+### About
+
+- [ ] **ABOUT-01**: Professional summary paragraph describes background, marketing philosophy, and career trajectory
+- [ ] **ABOUT-02**: Education credentials featured (UTD MS Marketing, University Gold Medalist)
+
+### Experience
+
+- [ ] **EXP-01**: All 4 professional roles displayed with company, title, dates, and location
+- [ ] **EXP-02**: Each role includes 3-4 achievement bullets with quantified metrics
+- [ ] **EXP-03**: Experience entries are visually structured as cards or timeline for scannability
+
+### Skills
+
+- [ ] **SKILL-01**: Marketing and analytics skills displayed by category (SEO, SEM, Campaign Optimization, etc.)
+- [ ] **SKILL-02**: Tools and platforms showcased with recognizable names (Google Analytics, HubSpot, Meta Ads, Shopify, etc.)
+- [ ] **SKILL-03**: Certifications listed (HubSpot Marketing Hub, Digital Scholar Workshop)
+
+### Leadership
+
+- [ ] **LEAD-01**: Leadership roles displayed (Global Ambassador, Kotler's Quorum President, PMC Events Officer)
+- [ ] **LEAD-02**: Each role includes organization, title, dates, and key achievement or description
+- [ ] **LEAD-03**: International Youth Exchange Program delegation noted
+
+### Contact
+
+- [ ] **CONT-01**: Email address displayed and linked (mailto)
+- [ ] **CONT-02**: LinkedIn profile linked prominently
+- [ ] **CONT-03**: Phone number accessible or omitted by choice
+
+### Navigation
+
+- [ ] **NAV-01**: Sticky top navigation bar with links to all sections
+- [ ] **NAV-02**: Active section highlighted in nav while scrolling (Intersection Observer)
+- [ ] **NAV-03**: Mobile hamburger menu that opens/closes cleanly
+- [ ] **NAV-04**: Smooth scroll animation when clicking nav links
+
+### Design
+
+- [ ] **DES-01**: Clean minimal layout with white/off-white background and dark text
+- [ ] **DES-02**: One muted accent color used consistently for buttons, links, and highlights
+- [ ] **DES-03**: Inter font family loaded via next/font/google
+- [ ] **DES-04**: Grid-based layout with consistent spacing and alignment
+- [ ] **DES-05**: Responsive design works on mobile (375px+), tablet, and desktop
+
+### Polish
+
+- [ ] **POL-01**: Subtle fade-in scroll animations on section entry using Motion library
+- [ ] **POL-02**: SEO meta tags set (title, description, Open Graph for LinkedIn sharing)
+- [ ] **POL-03**: JSON-LD Person schema for Google discoverability
+- [ ] **POL-04**: WCAG 2.2 AA color contrast (4.5:1 minimum for body text)
+- [ ] **POL-05**: All interactive elements keyboard-accessible
+- [ ] **POL-06**: Semantic HTML structure (proper heading hierarchy, landmarks)
+- [ ] **POL-07**: LCP under 2.5s on desktop and mobile
+
+## v2 Requirements
+
+Deferred to future release. Tracked but not in current roadmap.
+
+### Enhanced Content
+
+- **ENH-01**: Professional headshot / photo in hero or about section
+- **ENH-02**: Certifications badges section with credential logos and verification links
+- **ENH-03**: Social proof / testimonials from managers or colleagues
+- **ENH-04**: Campaign case study cards with detailed results
+
+### Additional Polish
+
+- **APOL-01**: Print-friendly stylesheet (hide nav, clean layout for printing)
+- **APOL-02**: Canonical URL and auto-generated sitemap.xml
+- **APOL-03**: Google Analytics (GA4) integration via next/script
+- **APOL-04**: Custom OG image for social media sharing
+
+## Out of Scope
+
+Explicitly excluded. Documented to prevent scope creep.
+
+| Feature | Reason |
+|---------|--------|
+| Blog / content publishing | No content strategy exists; LinkedIn serves as thought leadership channel |
+| Case study detail pages | No case studies available; placeholder content breaks trust |
+| Dark mode toggle | Doubles design work; light theme is more approachable for marketing audience |
+| CMS or admin panel | Static content, no dynamic updates needed |
+| Multi-language support | English only, US market |
+| Social media feed embeds | Layout instability, performance drag, uncontrolled content |
+| AI chatbot | Infrastructure overhead, gimmicky for job-seeking portfolio |
+| Video autoplay | Jarring in office settings, hurts LCP |
+| Contact form | User prefers links only (email + LinkedIn) |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| HERO-01 | Pending | Pending |
+| HERO-02 | Pending | Pending |
+| HERO-03 | Pending | Pending |
+| HERO-04 | Pending | Pending |
+| HERO-05 | Pending | Pending |
+| ABOUT-01 | Pending | Pending |
+| ABOUT-02 | Pending | Pending |
+| EXP-01 | Pending | Pending |
+| EXP-02 | Pending | Pending |
+| EXP-03 | Pending | Pending |
+| SKILL-01 | Pending | Pending |
+| SKILL-02 | Pending | Pending |
+| SKILL-03 | Pending | Pending |
+| LEAD-01 | Pending | Pending |
+| LEAD-02 | Pending | Pending |
+| LEAD-03 | Pending | Pending |
+| CONT-01 | Pending | Pending |
+| CONT-02 | Pending | Pending |
+| CONT-03 | Pending | Pending |
+| NAV-01 | Pending | Pending |
+| NAV-02 | Pending | Pending |
+| NAV-03 | Pending | Pending |
+| NAV-04 | Pending | Pending |
+| DES-01 | Pending | Pending |
+| DES-02 | Pending | Pending |
+| DES-03 | Pending | Pending |
+| DES-04 | Pending | Pending |
+| DES-05 | Pending | Pending |
+| POL-01 | Pending | Pending |
+| POL-02 | Pending | Pending |
+| POL-03 | Pending | Pending |
+| POL-04 | Pending | Pending |
+| POL-05 | Pending | Pending |
+| POL-06 | Pending | Pending |
+| POL-07 | Pending | Pending |
+
+**Coverage:**
+- v1 requirements: 35 total
+- Mapped to phases: 0
+- Unmapped: 35
+
+---
+*Requirements defined: 2026-04-03*
+*Last updated: 2026-04-03 after initial definition*
