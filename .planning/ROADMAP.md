@@ -34,7 +34,7 @@ Plans:
 - [x] 01-01-PLAN.md -- Bootstrap Next.js 16 project scaffold, install motion, initialize shadcn/ui
 - [x] 01-02-PLAN.md -- Wire Tailwind v4 @theme design tokens, Inter font, SEO metadata, JSON-LD Person schema, semantic HTML landmarks
 - [x] 01-03-PLAN.md -- Define TypeScript type contracts and populate all 7 data files with real resume content
-- [ ] 01-04-PLAN.md -- Write page.tsx section ID stubs, add OG image and resume PDF to public/
+- [x] 01-04-PLAN.md -- Write page.tsx section ID stubs, add OG image and resume PDF to public/
 **UI hint**: yes
 
 ### Phase 2: Content Sections
