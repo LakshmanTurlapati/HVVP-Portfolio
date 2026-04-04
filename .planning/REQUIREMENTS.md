@@ -53,10 +53,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Design
 
-- [ ] **DES-01**: Clean minimal layout with white/off-white background and dark text
-- [ ] **DES-02**: One muted accent color used consistently for buttons, links, and highlights
-- [ ] **DES-03**: Inter font family loaded via next/font/google
-- [ ] **DES-04**: Grid-based layout with consistent spacing and alignment
+- [x] **DES-01**: Clean minimal layout with white/off-white background and dark text
+- [x] **DES-02**: One muted accent color used consistently for buttons, links, and highlights
+- [x] **DES-03**: Inter font family loaded via next/font/google
+- [x] **DES-04**: Grid-based layout with consistent spacing and alignment
 - [ ] **DES-05**: Responsive design works on mobile (375px+), tablet, and desktop
 
 ### Polish
@@ -132,10 +132,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAV-02 | Phase 3 | Pending |
 | NAV-03 | Phase 3 | Pending |
 | NAV-04 | Phase 3 | Pending |
-| DES-01 | Phase 1 | Pending |
-| DES-02 | Phase 1 | Pending |
-| DES-03 | Phase 1 | Pending |
-| DES-04 | Phase 1 | Pending |
+| DES-01 | Phase 1 | Complete |
+| DES-02 | Phase 1 | Complete |
+| DES-03 | Phase 1 | Complete |
+| DES-04 | Phase 1 | Complete |
 | DES-05 | Phase 2 | Pending |
 | POL-01 | Phase 4 | Pending |
 | POL-02 | Phase 1 | Pending |

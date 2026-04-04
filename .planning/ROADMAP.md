@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Semantic HTML landmarks (`<header>`, `<main>`, `<footer>`, `<section>`) are in place and heading hierarchy starts at `<h1>`
 **Plans**: 4 plans
 Plans:
-- [ ] 01-01-PLAN.md -- Bootstrap Next.js 16 project scaffold, install motion, initialize shadcn/ui
+- [x] 01-01-PLAN.md -- Bootstrap Next.js 16 project scaffold, install motion, initialize shadcn/ui
 - [ ] 01-02-PLAN.md -- Wire Tailwind v4 @theme design tokens, Inter font, SEO metadata, JSON-LD Person schema, semantic HTML landmarks
 - [ ] 01-03-PLAN.md -- Define TypeScript type contracts and populate all 7 data files with real resume content
 - [ ] 01-04-PLAN.md -- Write page.tsx section ID stubs, add OG image and resume PDF to public/
@@ -80,7 +80,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/4 | Not started | - |
+| 1. Foundation | 1/4 | In Progress|  |
 | 2. Content Sections | 0/? | Not started | - |
 | 3. Navigation | 0/? | Not started | - |
 | 4. Polish + Launch | 0/? | Not started | - |
