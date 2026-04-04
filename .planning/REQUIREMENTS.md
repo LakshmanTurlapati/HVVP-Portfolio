@@ -67,7 +67,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **POL-04**: WCAG 2.2 AA color contrast (4.5:1 minimum for body text)
 - [x] **POL-05**: All interactive elements keyboard-accessible
 - [x] **POL-06**: Semantic HTML structure (proper heading hierarchy, landmarks)
-- [ ] **POL-07**: LCP under 2.5s on desktop and mobile
+- [x] **POL-07**: LCP under 2.5s on desktop and mobile
 
 ## v2 Requirements
 
@@ -143,7 +143,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POL-04 | Phase 4 | Complete |
 | POL-05 | Phase 4 | Complete |
 | POL-06 | Phase 1 | Complete |
-| POL-07 | Phase 4 | Pending |
+| POL-07 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 35 total
