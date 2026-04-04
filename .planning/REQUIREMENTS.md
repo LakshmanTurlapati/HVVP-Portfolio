@@ -22,15 +22,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Experience
 
-- [ ] **EXP-01**: All 4 professional roles displayed with company, title, dates, and location
-- [ ] **EXP-02**: Each role includes 3-4 achievement bullets with quantified metrics
-- [ ] **EXP-03**: Experience entries are visually structured as cards or timeline for scannability
+- [x] **EXP-01**: All 4 professional roles displayed with company, title, dates, and location
+- [x] **EXP-02**: Each role includes 3-4 achievement bullets with quantified metrics
+- [x] **EXP-03**: Experience entries are visually structured as cards or timeline for scannability
 
 ### Skills
 
-- [ ] **SKILL-01**: Marketing and analytics skills displayed by category (SEO, SEM, Campaign Optimization, etc.)
-- [ ] **SKILL-02**: Tools and platforms showcased with recognizable names (Google Analytics, HubSpot, Meta Ads, Shopify, etc.)
-- [ ] **SKILL-03**: Certifications listed (HubSpot Marketing Hub, Digital Scholar Workshop)
+- [x] **SKILL-01**: Marketing and analytics skills displayed by category (SEO, SEM, Campaign Optimization, etc.)
+- [x] **SKILL-02**: Tools and platforms showcased with recognizable names (Google Analytics, HubSpot, Meta Ads, Shopify, etc.)
+- [x] **SKILL-03**: Certifications listed (HubSpot Marketing Hub, Digital Scholar Workshop)
 
 ### Leadership
 
@@ -116,12 +116,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HERO-05 | Phase 2 | Complete |
 | ABOUT-01 | Phase 2 | Complete |
 | ABOUT-02 | Phase 2 | Complete |
-| EXP-01 | Phase 2 | Pending |
-| EXP-02 | Phase 2 | Pending |
-| EXP-03 | Phase 2 | Pending |
-| SKILL-01 | Phase 2 | Pending |
-| SKILL-02 | Phase 2 | Pending |
-| SKILL-03 | Phase 2 | Pending |
+| EXP-01 | Phase 2 | Complete |
+| EXP-02 | Phase 2 | Complete |
+| EXP-03 | Phase 2 | Complete |
+| SKILL-01 | Phase 2 | Complete |
+| SKILL-02 | Phase 2 | Complete |
+| SKILL-03 | Phase 2 | Complete |
 | LEAD-01 | Phase 2 | Pending |
 | LEAD-02 | Phase 2 | Pending |
 | LEAD-03 | Phase 2 | Pending |
