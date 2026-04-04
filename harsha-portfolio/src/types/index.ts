@@ -1,0 +1,63 @@
+// src/types/index.ts
+// Shared TypeScript interfaces for all section data
+// These types are the contract between data files and section components
+// DO NOT modify field names after Phase 2 begins -- section components depend on these shapes
+
+export interface Metric {
+  value: string
+  label: string
+}
+
+export interface HeroData {
+  name: string
+  tagline: string
+  availability: string
+  metrics: Metric[]
+  ctaResume: string
+  ctaContact: string
+}
+
+export interface ExperienceEntry {
+  role: string
+  company: string
+  location: string
+  startDate: string
+  endDate: string | 'Present'
+  bullets: string[]
+}
+
+export interface EducationEntry {
+  degree: string
+  field: string
+  institution: string
+  location: string
+  graduationDate: string
+  honors?: string
+  coursework?: string[]
+}
+
+export interface SkillsData {
+  marketingAnalytics: string[]
+  toolsPlatforms: string[]
+  certifications: string[]
+}
+
+export interface LeadershipEntry {
+  organization: string
+  role: string
+  startDate: string
+  endDate: string | 'Present'
+  description: string
+  location?: string
+}
+
+export interface AboutData {
+  bio: string
+}
+
+export interface ContactData {
+  email: string
+  linkedIn: string
+  resumePdf: string
+  phone?: string
+}
