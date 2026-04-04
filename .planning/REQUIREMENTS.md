@@ -62,11 +62,11 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Polish
 
 - [ ] **POL-01**: Subtle fade-in scroll animations on section entry using Motion library
-- [ ] **POL-02**: SEO meta tags set (title, description, Open Graph for LinkedIn sharing)
-- [ ] **POL-03**: JSON-LD Person schema for Google discoverability
+- [x] **POL-02**: SEO meta tags set (title, description, Open Graph for LinkedIn sharing)
+- [x] **POL-03**: JSON-LD Person schema for Google discoverability
 - [ ] **POL-04**: WCAG 2.2 AA color contrast (4.5:1 minimum for body text)
 - [ ] **POL-05**: All interactive elements keyboard-accessible
-- [ ] **POL-06**: Semantic HTML structure (proper heading hierarchy, landmarks)
+- [x] **POL-06**: Semantic HTML structure (proper heading hierarchy, landmarks)
 - [ ] **POL-07**: LCP under 2.5s on desktop and mobile
 
 ## v2 Requirements
@@ -138,11 +138,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DES-04 | Phase 1 | Complete |
 | DES-05 | Phase 2 | Pending |
 | POL-01 | Phase 4 | Pending |
-| POL-02 | Phase 1 | Pending |
-| POL-03 | Phase 1 | Pending |
+| POL-02 | Phase 1 | Complete |
+| POL-03 | Phase 1 | Complete |
 | POL-04 | Phase 4 | Pending |
 | POL-05 | Phase 4 | Pending |
-| POL-06 | Phase 1 | Pending |
+| POL-06 | Phase 1 | Complete |
 | POL-07 | Phase 4 | Pending |
 
 **Coverage:**
