@@ -34,15 +34,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Leadership
 
-- [ ] **LEAD-01**: Leadership roles displayed (Global Ambassador, Kotler's Quorum President, PMC Events Officer)
-- [ ] **LEAD-02**: Each role includes organization, title, dates, and key achievement or description
-- [ ] **LEAD-03**: International Youth Exchange Program delegation noted
+- [x] **LEAD-01**: Leadership roles displayed (Global Ambassador, Kotler's Quorum President, PMC Events Officer)
+- [x] **LEAD-02**: Each role includes organization, title, dates, and key achievement or description
+- [x] **LEAD-03**: International Youth Exchange Program delegation noted
 
 ### Contact
 
-- [ ] **CONT-01**: Email address displayed and linked (mailto)
-- [ ] **CONT-02**: LinkedIn profile linked prominently
-- [ ] **CONT-03**: Phone number accessible or omitted by choice
+- [x] **CONT-01**: Email address displayed and linked (mailto)
+- [x] **CONT-02**: LinkedIn profile linked prominently
+- [x] **CONT-03**: Phone number accessible or omitted by choice
 
 ### Navigation
 
@@ -122,12 +122,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SKILL-01 | Phase 2 | Complete |
 | SKILL-02 | Phase 2 | Complete |
 | SKILL-03 | Phase 2 | Complete |
-| LEAD-01 | Phase 2 | Pending |
-| LEAD-02 | Phase 2 | Pending |
-| LEAD-03 | Phase 2 | Pending |
-| CONT-01 | Phase 2 | Pending |
-| CONT-02 | Phase 2 | Pending |
-| CONT-03 | Phase 2 | Pending |
+| LEAD-01 | Phase 2 | Complete |
+| LEAD-02 | Phase 2 | Complete |
+| LEAD-03 | Phase 2 | Complete |
+| CONT-01 | Phase 2 | Complete |
+| CONT-02 | Phase 2 | Complete |
+| CONT-03 | Phase 2 | Complete |
 | NAV-01 | Phase 3 | Pending |
 | NAV-02 | Phase 3 | Pending |
 | NAV-03 | Phase 3 | Pending |

@@ -51,7 +51,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md -- HeroSection (name, tagline, availability, 5 metrics, dual CTAs) + AboutSection (bio, education callout)
 - [x] 02-02-PLAN.md -- ExperienceSection (timeline with BoldNumbers) + SkillsSection (grouped pills + cert treatment)
-- [ ] 02-03-PLAN.md -- LeadershipSection (simplified timeline, IYEP location) + ContactSection (email + LinkedIn CTAs) + page.tsx wire-up
+- [x] 02-03-PLAN.md -- LeadershipSection (simplified timeline, IYEP location) + ContactSection (email + LinkedIn CTAs) + page.tsx wire-up
 **UI hint**: yes
 
 ### Phase 3: Navigation
