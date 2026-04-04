@@ -65,7 +65,7 @@ Plans:
   4. Clicking any nav link scrolls smoothly to that section; the hamburger menu can be opened and closed with the keyboard alone
 **Plans**: 1 plan
 Plans:
-- [ ] 03-01-PLAN.md -- useActiveSection hook + Navbar (sticky, active highlight, hamburger, keyboard accessible)
+- [x] 03-01-PLAN.md -- useActiveSection hook + Navbar (sticky, active highlight, hamburger, keyboard accessible)
 **UI hint**: yes
 
 ### Phase 4: Polish + Launch

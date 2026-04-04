@@ -46,10 +46,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Navigation
 
-- [ ] **NAV-01**: Sticky top navigation bar with links to all sections
-- [ ] **NAV-02**: Active section highlighted in nav while scrolling (Intersection Observer)
-- [ ] **NAV-03**: Mobile hamburger menu that opens/closes cleanly
-- [ ] **NAV-04**: Smooth scroll animation when clicking nav links
+- [x] **NAV-01**: Sticky top navigation bar with links to all sections
+- [x] **NAV-02**: Active section highlighted in nav while scrolling (Intersection Observer)
+- [x] **NAV-03**: Mobile hamburger menu that opens/closes cleanly
+- [x] **NAV-04**: Smooth scroll animation when clicking nav links
 
 ### Design
 
@@ -128,10 +128,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONT-01 | Phase 2 | Complete |
 | CONT-02 | Phase 2 | Complete |
 | CONT-03 | Phase 2 | Complete |
-| NAV-01 | Phase 3 | Pending |
-| NAV-02 | Phase 3 | Pending |
-| NAV-03 | Phase 3 | Pending |
-| NAV-04 | Phase 3 | Pending |
+| NAV-01 | Phase 3 | Complete |
+| NAV-02 | Phase 3 | Complete |
+| NAV-03 | Phase 3 | Complete |
+| NAV-04 | Phase 3 | Complete |
 | DES-01 | Phase 1 | Complete |
 | DES-02 | Phase 1 | Complete |
 | DES-03 | Phase 1 | Complete |
