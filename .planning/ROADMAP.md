@@ -47,7 +47,11 @@ Plans:
   3. All four professional roles are displayed with company, title, dates, and 3-4 quantified achievement bullets each
   4. Skills are grouped by category and tools are listed with recognizable platform names; certifications are listed below
   5. Email and LinkedIn are both visible and clickable in the contact section; all three leadership roles are displayed with their descriptions
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 02-01-PLAN.md -- HeroSection (name, tagline, availability, 5 metrics, dual CTAs) + AboutSection (bio, education callout)
+- [ ] 02-02-PLAN.md -- ExperienceSection (timeline with BoldNumbers) + SkillsSection (grouped pills + cert treatment)
+- [ ] 02-03-PLAN.md -- LeadershipSection (simplified timeline, IYEP location) + ContactSection (email + LinkedIn CTAs) + page.tsx wire-up
 **UI hint**: yes
 
 ### Phase 3: Navigation
@@ -80,7 +84,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 3/4 | In Progress|  |
-| 2. Content Sections | 0/? | Not started | - |
+| 1. Foundation | 4/4 | Complete |  |
+| 2. Content Sections | 0/3 | Not started | - |
 | 3. Navigation | 0/? | Not started | - |
 | 4. Polish + Launch | 0/? | Not started | - |
