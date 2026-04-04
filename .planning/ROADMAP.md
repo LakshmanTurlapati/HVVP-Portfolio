@@ -49,8 +49,8 @@ Plans:
   5. Email and LinkedIn are both visible and clickable in the contact section; all three leadership roles are displayed with their descriptions
 **Plans**: 3 plans
 Plans:
-- [ ] 02-01-PLAN.md -- HeroSection (name, tagline, availability, 5 metrics, dual CTAs) + AboutSection (bio, education callout)
-- [ ] 02-02-PLAN.md -- ExperienceSection (timeline with BoldNumbers) + SkillsSection (grouped pills + cert treatment)
+- [x] 02-01-PLAN.md -- HeroSection (name, tagline, availability, 5 metrics, dual CTAs) + AboutSection (bio, education callout)
+- [x] 02-02-PLAN.md -- ExperienceSection (timeline with BoldNumbers) + SkillsSection (grouped pills + cert treatment)
 - [ ] 02-03-PLAN.md -- LeadershipSection (simplified timeline, IYEP location) + ContactSection (email + LinkedIn CTAs) + page.tsx wire-up
 **UI hint**: yes
 

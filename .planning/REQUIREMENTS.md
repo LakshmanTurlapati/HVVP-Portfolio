@@ -9,16 +9,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Hero
 
-- [ ] **HERO-01**: Page displays Harsha's full name prominently as the primary heading
-- [ ] **HERO-02**: Tagline communicates specialization ("Data-Driven Digital Marketing Professional | SEO, Social Media, Campaign Optimization")
-- [ ] **HERO-03**: CTA buttons link to contact section and downloadable resume PDF
-- [ ] **HERO-04**: Availability statement visible ("Open to full-time roles | US work authorized for up to 36 months")
-- [ ] **HERO-05**: 3-5 headline metrics displayed prominently (e.g., "40% traffic increase", "25% lead growth")
+- [x] **HERO-01**: Page displays Harsha's full name prominently as the primary heading
+- [x] **HERO-02**: Tagline communicates specialization ("Data-Driven Digital Marketing Professional | SEO, Social Media, Campaign Optimization")
+- [x] **HERO-03**: CTA buttons link to contact section and downloadable resume PDF
+- [x] **HERO-04**: Availability statement visible ("Open to full-time roles | US work authorized for up to 36 months")
+- [x] **HERO-05**: 3-5 headline metrics displayed prominently (e.g., "40% traffic increase", "25% lead growth")
 
 ### About
 
-- [ ] **ABOUT-01**: Professional summary paragraph describes background, marketing philosophy, and career trajectory
-- [ ] **ABOUT-02**: Education credentials featured (UTD MS Marketing, University Gold Medalist)
+- [x] **ABOUT-01**: Professional summary paragraph describes background, marketing philosophy, and career trajectory
+- [x] **ABOUT-02**: Education credentials featured (UTD MS Marketing, University Gold Medalist)
 
 ### Experience
 
@@ -57,7 +57,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DES-02**: One muted accent color used consistently for buttons, links, and highlights
 - [x] **DES-03**: Inter font family loaded via next/font/google
 - [x] **DES-04**: Grid-based layout with consistent spacing and alignment
-- [ ] **DES-05**: Responsive design works on mobile (375px+), tablet, and desktop
+- [x] **DES-05**: Responsive design works on mobile (375px+), tablet, and desktop
 
 ### Polish
 
@@ -109,13 +109,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HERO-01 | Phase 2 | Pending |
-| HERO-02 | Phase 2 | Pending |
-| HERO-03 | Phase 2 | Pending |
-| HERO-04 | Phase 2 | Pending |
-| HERO-05 | Phase 2 | Pending |
-| ABOUT-01 | Phase 2 | Pending |
-| ABOUT-02 | Phase 2 | Pending |
+| HERO-01 | Phase 2 | Complete |
+| HERO-02 | Phase 2 | Complete |
+| HERO-03 | Phase 2 | Complete |
+| HERO-04 | Phase 2 | Complete |
+| HERO-05 | Phase 2 | Complete |
+| ABOUT-01 | Phase 2 | Complete |
+| ABOUT-02 | Phase 2 | Complete |
 | EXP-01 | Phase 2 | Pending |
 | EXP-02 | Phase 2 | Pending |
 | EXP-03 | Phase 2 | Pending |
@@ -136,7 +136,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DES-02 | Phase 1 | Complete |
 | DES-03 | Phase 1 | Complete |
 | DES-04 | Phase 1 | Complete |
-| DES-05 | Phase 2 | Pending |
+| DES-05 | Phase 2 | Complete |
 | POL-01 | Phase 4 | Pending |
 | POL-02 | Phase 1 | Complete |
 | POL-03 | Phase 1 | Complete |
