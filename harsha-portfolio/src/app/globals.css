@@ -14,7 +14,7 @@
   --color-accent: oklch(0.55 0.10 240);
   --color-accent-hover: oklch(0.48 0.12 240);
   --color-muted: oklch(0.93 0.00 0);
-  --color-muted-foreground: oklch(0.50 0.01 260);
+  --color-muted-foreground: oklch(0.45 0.01 260);
   --color-card: oklch(0.97 0.00 0);
 
   /* Border radius */
@@ -41,5 +41,19 @@ body {
   }
   html {
     @apply font-sans;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
