@@ -77,7 +77,10 @@ Plans:
   2. All body text passes 4.5:1 color contrast ratio; all interactive elements are reachable and operable via keyboard alone
   3. Lighthouse on the deployed Vercel URL reports LCP under 2.5s and an accessibility score of 100
   4. The site is live at a public URL; all external links (email, LinkedIn, resume PDF) work correctly in production
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 04-01-PLAN.md -- AnimatedSection wrapper (motion/react fade-in-up, prefers-reduced-motion) + focus rings + contrast fix + skip-to-content link
+- [ ] 04-02-PLAN.md -- Production build validation + Vercel deployment + live site verification (LCP, links, keyboard)
 
 ## Progress
 
@@ -89,4 +92,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Foundation | 4/4 | Complete |  |
 | 2. Content Sections | 0/3 | Not started | - |
 | 3. Navigation | 0/? | Not started | - |
-| 4. Polish + Launch | 0/? | Not started | - |
+| 4. Polish + Launch | 0/2 | Not started | - |
