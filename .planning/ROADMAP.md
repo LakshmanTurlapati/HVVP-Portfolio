@@ -79,7 +79,7 @@ Plans:
   4. The site is live at a public URL; all external links (email, LinkedIn, resume PDF) work correctly in production
 **Plans**: 2 plans
 Plans:
-- [ ] 04-01-PLAN.md -- AnimatedSection wrapper (motion/react fade-in-up, prefers-reduced-motion) + focus rings + contrast fix + skip-to-content link
+- [x] 04-01-PLAN.md -- AnimatedSection wrapper (motion/react fade-in-up, prefers-reduced-motion) + focus rings + contrast fix + skip-to-content link
 - [ ] 04-02-PLAN.md -- Production build validation + Vercel deployment + live site verification (LCP, links, keyboard)
 
 ## Progress
