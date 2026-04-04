@@ -63,7 +63,9 @@ Plans:
   2. The nav link corresponding to the section currently in view is visually highlighted; highlight updates as the user scrolls through each section
   3. On a mobile viewport (375px), the nav collapses to a hamburger icon; tapping it opens and closes a menu that contains all section links
   4. Clicking any nav link scrolls smoothly to that section; the hamburger menu can be opened and closed with the keyboard alone
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 03-01-PLAN.md -- useActiveSection hook + Navbar (sticky, active highlight, hamburger, keyboard accessible)
 **UI hint**: yes
 
 ### Phase 4: Polish + Launch
