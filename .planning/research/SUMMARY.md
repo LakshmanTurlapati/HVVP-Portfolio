@@ -1,284 +1,217 @@
 # Project Research Summary
 
-**Project:** Harsha Vardhini Portfolio
-**Domain:** Single-page marketing professional portfolio (job-seeking)
-**Researched:** 2026-04-03
+**Project:** Harsha Vardhini Portfolio -- v2.0 Brand Redesign & Creative Portfolio
+**Domain:** Marketer/designer hybrid portfolio (additive milestone on shipped Next.js 16 app)
+**Researched:** 2026-04-04
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This is a recruiter-facing, single-page portfolio for a data-driven digital marketing professional with a strong academic credential (University Gold Medal, MS Marketing at UT Dallas). Research across industry hiring guides and technical documentation confirms that the primary job of the site is to pass a 55-second recruiter scan — which means immediate identity clarity in the hero, measurable achievements in every experience bullet, and frictionless contact. The recommended build approach is Next.js 16 with static generation, Tailwind CSS v4, and the Motion library for subtle scroll animations. Content lives in typed TypeScript data files with no CMS, no API routes, and no runtime data fetching.
+This milestone repositions a live Next.js 16 portfolio from "data-driven marketer with numbers" to "strategist + creator with a visible body of work." The redesign layers three new capabilities onto an already-validated v1.0 base: (1) a DeepBlack/Orange/White brand palette paired with Montserrat Bold display typography, (2) two inline case studies built on a reusable 5-block component (Description / Context / What I Did / Execution / Results), and (3) a 31-asset creative gallery grouped into 6 categories with click-to-enlarge behavior. The existing v1.0 stack (Next.js 16.2.2, React 19, Tailwind v4, shadcn/ui, motion 12.38.0, @base-ui/react 1.3.0) is sufficient; zero new production dependencies are required for the baseline plan.
 
-The recommended architecture is deliberately minimal: one page (`app/page.tsx`) composed of six section components, all Server Components except the Navbar. All content is sourced from `src/data/*.ts` typed files, making updates a matter of editing a data file and redeploying — no component surgery required. Deployment to Vercel's free Hobby tier is zero-config and appropriate for a personal non-commercial portfolio.
+**The foundational design rule that governs every other decision:** Orange #FF6A00 on the off-white background measures ~2.73:1 contrast, which **fails WCAG 2.2 AA for body text (4.5:1) AND fails the 3:1 threshold for UI elements and focus rings.** Orange only passes when paired with DeepBlack (6.68:1) or when used as large display text / non-text UI shapes ≥24px on light surfaces. This single constraint dictates that orange may appear as headings, metric numbers, CTA fills (with DeepBlack text, never white), borders, badges, and dark-surface accents -- but **never** as body paragraph text and **never** as white-on-orange button labels. The skip-link currently uses `focus:bg-accent focus:text-white`, which regresses the moment the token flips; it must be rewritten to `focus:bg-foreground focus:text-background`.
 
-The key risks are non-technical: a vague hero tagline, experience bullets without metrics, and a broken or hard-to-find contact path account for most recruiter drop-off. Technical risks are mitigated by stack choices: `next/font` prevents font CLS, `next/image` prevents image performance failures, and third-party form services (Formspree or Web3Forms) eliminate the need for custom API routes. Both mobile-first layout discipline and accessibility from the start (semantic HTML, 4.5:1 contrast, keyboard navigation) are non-negotiable — a digital marketer's broken mobile site is a direct credibility signal.
-
----
-
-## Stack Recommendation
-
-Use Next.js 16 (App Router, static generation), TypeScript 5.x, Tailwind CSS v4 (CSS-first config via `@import "tailwindcss"` and `@theme` directive), Motion 12.x (imported from `motion/react`) for scroll-reveal animations, `next/font/google` for zero-CLS Inter font loading, and shadcn/ui selectively (Button, Card, Separator only). Deploy to Vercel free Hobby tier. Bootstrap with `create-next-app@latest --typescript --eslint --tailwind --app --src-dir --import-alias "@/*"`, then `npx shadcn@latest init`, then `npm install motion`.
-
-Do not use: CSS-in-JS libraries, CSS Modules, GSAP, Material UI, GitHub Pages, or any form of server-side rendering or API routes. All content is static; treat this as an SSG site with React polish.
-
----
+**The recommended build sequence is tightly constrained by dependencies.** Design tokens must ship first (palette swap + Montserrat font + full shadcn token expansion) because every new section consumes them; shipping sections under old tokens means re-styling everything. Types and data files follow, then component rebuilds (Hero/About/Contact inherit existing structure -- quick wins first), then the gallery (highest complexity, 31 images requiring WebP conversion + `next/image` discipline on a codebase that has zero prior `next/image` usage), then navbar/section-ID rewiring, then polish/launch. All 4 independent research tracks converged on this ordering without coordination. Risk concentrates in two places: (1) the accent-token migration touches 27 existing usages across 9 files and will silently regress the shipped WCAG 2.2 AA compliance if not audited call-site-by-call-site, and (2) the gallery image pipeline must be established from scratch (50MB raw PNGs → ~5-10MB WebP/AVIF via Next.js optimization, mandatory `sizes` attribute, lazy-loading default) or LCP/CLS collapse on mobile.
 
 ## Key Findings
 
 ### Recommended Stack
 
-Next.js 16 is verified stable (16.2.2 on npm as of 2026-04-03) and is the unambiguous choice for a portfolio that requires real meta tags for SEO — pure SPAs cannot render `<meta>` tags that search crawlers and LinkedIn preview cards consume. React Compiler in Next.js 16 auto-memoizes, eliminating the need for manual `useMemo`/`useCallback`.
+The v1.0 base stack is fully sufficient for v2.0 -- no new production dependencies are required. Three additive changes inside existing files do all the work: a second `next/font/google` Montserrat import alongside Inter, an OKLCH palette swap inside the Tailwind v4 `@theme` block, and a `next/image` discipline across 31 gallery assets. The project already has `@base-ui/react@1.3.0` installed as a transitive dep, which ships a fully accessible `Dialog` primitive (portal + backdrop + focus trap + escape-to-close) that serves as a zero-KB lightbox.
 
-**Core technologies:**
-- Next.js 16 + React 19: App Router with SSG — the framework for routing, metadata API, `next/image`, and `next/font`
-- TypeScript 5.x: default in `create-next-app`; catches content data shape errors before runtime
-- Tailwind CSS v4: CSS-first config, 5x faster builds, `@theme` directive for design tokens — no `tailwind.config.js` needed
-- Motion 12.x: `whileInView` for scroll-reveal animations; install as `motion`, import from `motion/react`
-- next/font/google: self-hosted Inter, zero layout shift, no external CDN round-trip
-- shadcn/ui (selective): copy-paste primitives that own the project — no version lock-in
-- Vercel Hobby: zero-config deployment, automatic preview URLs, CDN included
+**Core additions:**
+- **`next/font/google` Montserrat (variable font, or `weight: ['700','800']` for static subset)** — Display heading font, same self-hosted pattern as existing Inter setup. Pair via second CSS variable `--font-montserrat` exposed on `<html>`.
+- **Tailwind v4 `@theme` palette rewrite** — DeepBlack `oklch(~0.15 0 0)`, Orange `oklch(~0.68 0.21 40)`, Orange-soft `oklch(~0.79 0.14 55)`, White `oklch(~0.98 0 0)`. Zero new dependencies; CSS-only change.
+- **`next/image` with mandatory `sizes` attribute** — 31-asset gallery is viable only with runtime AVIF/WebP conversion (via bundled `sharp`). Default `loading="lazy"` is correct for below-the-fold items; `preload={true}` replaces the deprecated `priority` prop in Next.js 16.
+- **`@base-ui/react` Dialog (already installed)** OR **`yet-another-react-lightbox-lite` (~5 KB gzip)** for click-to-enlarge behavior — see decision point in Gaps section.
 
-### Table Stakes Features
+See `.planning/research/STACK.md` for complete rationale, OKLCH derivations, font-loading pattern, and bundle-size analysis.
 
-Must ship before launch — missing any of these signals an incomplete or unprofessional portfolio to recruiters:
+### Expected Features
 
-- Hero section: name, specialization tagline (not generic), CTA to contact and resume download within one viewport
-- Professional headshot (high-quality only)
-- About / Bio section (one concise paragraph tying credentials to narrative)
-- Experience section with measurable achievements — every bullet must contain a metric (%, $, time, scale)
-- Skills and tools section grouped by category with platform logos/icons
-- Education section with UTD MS Marketing and Gold Medal featured prominently
-- Contact section: email link, LinkedIn URL, working contact form
-- Fully responsive layout tested at 375px, 390px, and 414px on iOS Safari and Android Chrome
-- Smooth scroll navigation with anchor links and a sticky header
-- SEO meta tags: title, description, Open Graph, canonical URL
-- Fast load time: LCP under 2.5s, CLS under 0.1
+The v2.0 brief maps cleanly onto designer/marketer portfolio conventions from 2025-2026 sources. Table-stakes are well-defined; the brief supplies all required copy verbatim.
 
-### Should-Have Features (Differentiators)
+**Must have (table stakes):**
+- Brand token system (DeepBlack/Orange/White + Montserrat display) rolled out across every section -- blocks everything else
+- Rebuilt Hero with brief copy + 3 metric cards (down from 5 in v1.0)
+- Rewritten About Me with brief-supplied copy verbatim
+- Two case studies in identical 5-block structure (UTD International Center + Rio Jiu Jitsu), rendered as a single reusable component with two data inputs
+- Creative Work gallery: 6 category sections, 31 assets each with curated title (not raw filename)
+- Click-to-enlarge lightbox with keyboard nav (ESC, arrows) and focus return
+- "What I Bring to the Table" skills block (brief copy, replaces v1.0 Skills pill chips)
+- Redesigned Contact as "Let's Connect"
+- Updated Navbar anchor links to match new section lineup
+- WCAG 2.2 AA contrast re-verification after palette change
 
-- Downloadable PDF resume button in hero or nav
-- Metrics callout / stat highlights (3-5 headline numbers pulled near hero or at section tops)
-- Certifications / badges section with credential logos linked to verification pages
-- Leadership and extracurricular roles section (Global Ambassador, Kotler's Quorum President, PMC Officer)
-- Fade-in scroll animations (subtle, entrance-only, `prefers-reduced-motion` respected)
-- JSON-LD Person schema in `<head>` (name, jobTitle, alumniOf, url, sameAs LinkedIn)
-- Active section highlight on nav items during scroll (Intersection Observer)
-- Open Graph image (1200x630px) for social share previews
-- Visible "Open to Work" / availability statement in hero or footer
+**Should have (competitive differentiators):**
+- Pull-quote metric between Execution and Results blocks in each case study (magazine feel)
+- At-a-glance Role/Timeline/Headline stat row atop each case study
+- Gallery hover state revealing title on desktop (always visible on mobile)
+- Client/channel badge on gallery thumbnails (decoded from filename prefix: PP, UTDG, IC, ISSO, OIE, II)
+- Aspect-ratio-preserving uniform grid cells (category-appropriate 1:1, 1.91:1, etc.)
+- Orange underline accent on section heading reveals
 
-### Defer to Post-Launch (v2+)
+**Defer to v2.1+:**
+- Case study detail pages (never justified for only 2 case studies)
+- Gallery search/filter UI (single-page scrolling already does this work for 31 items)
+- Dark/light mode toggle (brand identity IS the palette -- don't dilute it)
+- Asset download buttons (client IP concerns)
+- CMS integration (content is stable, 2 case studies won't change weekly)
 
-- Social proof / testimonials (only if quotes can be collected from real sources)
-- Print-friendly stylesheet
-- Sitemap.xml via `next-sitemap`
-- Google Analytics (GA4) via `next/script`, anonymized mode
-
-### Anti-Features (Never Build)
-
-Blog, CMS, dark mode toggle, case study detail pages, heavy parallax, AI chatbot, social feed embeds, admin panel, multi-language support, password-protected sections.
+See `.planning/research/FEATURES.md` for full table-stakes/differentiator breakdown and anti-features.
 
 ### Architecture Approach
 
-The entire site is one page (`app/page.tsx`) rendering a linear stack of section components in a single scrollable canvas. Navigation is a sticky anchor-link header — no `next/link` for same-page anchors (known Next.js open issue: `<Link>` suppresses browser scroll behavior; use plain `<a href="#section">` tags with `scroll-behavior: smooth` in global CSS). All section components are React Server Components. Only `Navbar` is a Client Component (`'use client'`) because it needs `useState`/`useEffect` for scroll detection and mobile menu toggle. Content is imported directly from `src/data/*.ts` typed files — no prop drilling, no Context, no state management library.
+The v2.0 architecture is **additive -- not a rewrite.** The existing typed-data-singleton pattern (one interface in `src/types/`, one data export in `src/data/[name].ts`, one server component in `src/components/sections/[Name]Section.tsx`) is preserved for all new single-instance sections. One new pattern is introduced: **Data-as-Prop** for the case study component (one component + two data inputs = two sections), which is the correct shape for repeating structural content. Everything else continues the v1.0 pattern. The `useActiveSection` hook is ID-agnostic (queries `document.querySelectorAll("section[id]")` at runtime), so section ID changes require zero hook modifications -- only the `NAV_LINKS` array and section JSX must stay in lockstep.
 
 **Major components:**
-1. `RootLayout` (app/layout.tsx) — HTML shell, Inter font via `next/font`, Metadata API export, global CSS
-2. `Navbar` (Client Component) — sticky header, plain `<a>` anchor links, `useActiveSection` hook, mobile hamburger
-3. Section components (Server Components) — `HeroSection`, `AboutSection`, `ExperienceSection`, `SkillsSection`, `EducationSection`, `ContactSection`
-4. `src/data/*.ts` files — source of truth for all content; typed interfaces in `src/types/index.ts`
-5. `useActiveSection` hook — Intersection Observer watches all `section[id]` elements, returns active ID for Navbar highlight
+1. **Design Token System (`globals.css` @theme + `layout.tsx` fonts)** — Palette + typography tokens. Foundation for everything. Must ship first. Includes full shadcn token expansion (`--color-card`, `--color-border`, `--color-input`, `--color-ring`, `--color-accent-foreground`), not just the 5 tokens currently declared.
+2. **CaseStudySection (new, data-as-prop)** — Renders any `CaseStudyData` (5 blocks + optional metrics). Mounted twice in `page.tsx` with `caseStudyUtd` and `caseStudyRio` data. Section ID derived from `data.slug` as `case-study-{slug}`.
+3. **GallerySection + GalleryGrid + GalleryCard (new)** — 6 categories × N assets, server-rendered `next/image` grid with kebab-case paths under `public/gallery/[category-slug]/`. Optional `GalleryLightbox` client island opens on click.
+4. **ValuePropSection (new, typed-data-singleton)** — "What I Bring to the Table" replaces retired `SkillsSection`.
+5. **Retired components** — `ExperienceSection`, `SkillsSection` (v1.0 pill chips), `LeadershipSection` deleted. `experience.ts`, `skills.ts`, `leadership.ts` data files deleted. `education.ts` likely absorbed into About. Types stay (harmless).
+6. **Navbar (modified)** — `NAV_LINKS` array replaced with new 7-item lineup: `hero`, `about`, `case-study-utd`, `case-study-rio`, `gallery`, `value-prop`, `contact`. Short labels ("UTD", "Rio", "Work", "Approach") to fit desktop bar.
 
-**Critical dependency:** Section `id` attributes must be finalized before the Navbar active-section logic is written. Renaming section IDs after that point breaks nav highlight behavior.
+Client-island boundaries remain minimal: Navbar (hamburger state + active-section), AnimatedSection (motion), and the optional GalleryLightbox. Everything else is Server Component with zero hydration cost.
+
+See `.planning/research/ARCHITECTURE.md` for complete data models, file layouts, migration order, and anti-patterns.
 
 ### Critical Pitfalls
 
-1. **Vague hero tagline** — Draft the tagline before writing any code. It must name the specific discipline: "Data-Driven Digital Marketer | SEO, Social Media & Campaign Analytics." Recruiter exits within 55 seconds if identity is unclear.
+1. **Orange contrast fails except on DeepBlack** — #FF6A00 on #F9F9F9 = 2.73:1 (FAIL body, FAIL UI). #FFFFFF on #FF6A00 = 2.87:1 (FAIL button labels). Rule: orange text only on DeepBlack surfaces; buttons with orange fill use DeepBlack text not white; on white surfaces, orange is non-text only (borders, underlines, large display headings ≥24px). Add contrast-check script to CI.
 
-2. **Experience bullets without metrics** — Audit Harsha's resume for quantified achievements before implementing any section. Every bullet must follow: Action + Metric + Context. The absence of numbers directly contradicts a "data-driven" positioning claim.
+2. **`--color-accent` token collision across 27 existing usages in 9 files** — Simple token swap silently regresses Phase 4 WCAG 2.2 AA compliance. The `focus:bg-accent focus:text-white` on the skip-link (the single most important accessibility affordance) becomes 2.87:1 FAIL the moment the token flips. Mandatory: audit every `accent`-prefixed class before the swap, split token into `--color-accent` (orange, dark-only) vs `--color-accent-foreground` (DeepBlack for button text), rewrite skip-link to `focus:bg-foreground focus:text-background`.
 
-3. **Mobile-last design** — Write base styles for mobile first, apply `md:` / `lg:` modifiers for larger screens. Test at 375px throughout development, not only at the end. Navigation hamburger menu must be keyboard-accessible. Touch targets minimum 44x44px.
+3. **31 PNGs (50MB raw) tank LCP and CLS without image pipeline discipline** — Codebase has ZERO `next/image` usage today, so pattern must be established. Required: kebab-case rename to `public/gallery/[category]/[asset].png`, WebP/AVIF output via `images.formats: ['image/avif','image/webp']` in next.config, mandatory `sizes` attribute on every image (without it Next.js assumes 100vw and ships full-res to mobile), `aspect-ratio` container per category (1:1 Instagram, 1.91:1 LinkedIn, 16:9 signage) to prevent CLS, `loading="lazy"` default (never override with `eager`), `preload={true}` replaces deprecated `priority` prop. Budget: <500KB gallery payload on first mobile paint.
 
-4. **Broken contact path** — Use Formspree, Web3Forms, or EmailJS. Test the form end-to-end (submit → receive email → see confirmation) before marking the section done. A motivated recruiter who cannot contact the candidate is a total loss.
+4. **Montserrat preload regression if weight array used instead of variable font** — Listing `['400','700','900']` ships three .woff2 files and doubles font transfer. Use variable Montserrat (omit `weight` or explicit `'variable'`) OR minimal static subset (`['700','800']` only), keep `subsets: ['latin']` only, scope `font-display` to H1/H2 only (never H3+, nav, or body) to avoid overuse that erases hierarchy.
 
-5. **Core Web Vitals failures** — Use `next/image` for every image (never `<img>`), `next/font` for Inter (never Google Fonts CDN link), add `priority` prop to above-the-fold images, set explicit `width`/`height` on all images. Run Lighthouse before launch.
+5. **OG image cache staleness on redesign** — LinkedIn, X, Slack, iMessage cache OG images 7-30 days. Updating `/og-image.png` in place means recruiters who receive the new URL see the old muted-blue preview for weeks. Required: rename file (`og-image-v2.png`), update `openGraph.images` + add `twitter.images` (currently missing), verify `metadataBase` matches production domain, submit to LinkedIn Post Inspector after deploy.
 
----
+See `.planning/research/PITFALLS.md` for the full 13-pitfall catalog (5 critical, 5 moderate, 3 minor) plus technical-debt patterns, performance traps, and the "Looks Done But Isn't" verification checklist.
 
 ## Implications for Roadmap
 
-### Phase 1: Foundation and Content Preparation
+Based on combined research, suggested phase structure (all 3 architecture-adjacent researchers independently converged on this ordering):
 
-**Rationale:** Content decisions must precede code. The experience bullets must be metric-rich before any component is written or the data shape is designed around vague copy. Scaffold and data layer are the dependency for everything else.
+### Phase 1: Design Token Foundation
+**Rationale:** Every new v2.0 section consumes tokens. Shipping sections under old tokens means re-styling every component a second time. This phase is the hard dependency for everything downstream.
+**Delivers:** Full palette swap (DeepBlack/Orange/White OKLCH values in `@theme`), Montserrat variable font added via `next/font/google`, `--font-display` token wired, shadcn token set expanded to full specification (card, border, input, ring, accent-foreground), skip-link rewritten to use foreground/background not accent/white, full audit of all 27 existing `accent`-prefixed usages with call-site-by-call-site contrast verification, contrast-check script added to CI.
+**Addresses:** Brand Token System feature (blocks all others).
+**Avoids:** Pitfall 1 (orange contrast failure), Pitfall 2 (token collision across 27 usages), Pitfall 4 (Montserrat preload regression), Pitfall 6 (shadcn token drift), Pitfall 7 (Montserrat overuse), Pitfall 11 (accidentally removing `tw-animate-css`).
+**Complexity:** MEDIUM -- mechanical work touches every component file, easy to miss spots.
 
-**Delivers:** Runnable project scaffold, complete typed data files with all content finalized, Inter font wired, SEO metadata exported from layout.
+### Phase 2: Content Sections (Hero / About / Value Prop / Contact)
+**Rationale:** Rebuild known components first (quick wins front-loaded) + add the one new non-gallery section. These sections use existing layout structure and all rely on Phase 1 tokens. All brief copy is supplied verbatim.
+**Delivers:** Rebuilt HeroSection (new copy + 3 metric cards, down from 5; Montserrat H1), rebuilt AboutSection (new bio copy verbatim), new ValuePropSection replacing retired SkillsSection, rebuilt ContactSection ("Let's Connect" heading). New types (`ValuePropItem`, `ValuePropData`) in `src/types/index.ts`. New/rebuilt data files: `hero.ts`, `about.ts`, `valueProp.ts`, `contact.ts`.
+**Uses:** Tailwind v4 tokens from Phase 1, existing `AnimatedSection` wrapper (motion/react), existing typed-data-singleton pattern.
+**Implements:** HeroSection, AboutSection, ValuePropSection, ContactSection components.
+**Complexity:** LOW -- brief supplies exact copy, layout patterns exist from v1.0.
 
-**Addresses:** Table stakes features (all section content), pitfalls 1 and 2 (hero tagline drafted, metrics audited before any code).
+### Phase 3: Case Studies
+**Rationale:** Case studies depend on Phase 1 tokens and introduce the new Data-as-Prop pattern. The single reusable `CaseStudySection` component with two data inputs enforces the "scannable repeat pattern" that recruiters rely on when comparing studies.
+**Delivers:** New `CaseStudyData` and `CaseStudyBlock` types, `caseStudyUtd.ts` and `caseStudyRio.ts` data files (each with Description / Context / What I Did / Execution / Results blocks plus role/timeframe/client metadata), single `CaseStudySection.tsx` component accepting `data: CaseStudyData` prop, section IDs derived as `case-study-{slug}`.
+**Addresses:** Case study 5-block structure, quantified results callout, consistent repeated structure, optional metric pull-quote differentiator, optional stat row differentiator.
+**Avoids:** Pitfall 8 (missing alt text on case-study inline images -- run axe-core after each case study, not just at milestone end).
+**Complexity:** LOW -- simple data-driven render, 5 prose blocks + optional decorations.
 
-**Tasks:**
-- `create-next-app` with TypeScript, Tailwind v4, App Router, `src/` directory
-- `npx shadcn@latest init` + add Button, Card, Separator
-- `npm install motion`
-- Finalize hero tagline copy (name + specialization + CTA text)
-- Audit resume; write all experience bullets with metrics
-- Populate `src/types/index.ts` with TypeScript interfaces
-- Populate all `src/data/*.ts` files (hero, about, experience, skills, education, contact)
-- Wire `next/font/google` Inter in `app/layout.tsx`
-- Export `metadata` object from `app/layout.tsx` (title, description, Open Graph, canonical)
-- Add custom favicon (initials HV in accent color)
-- Add `resume.pdf` to `/public`
+### Phase 4: Creative Work Gallery (Highest Complexity)
+**Rationale:** Gallery is the single-largest risk surface (31 images, 50MB raw, zero prior `next/image` in codebase, WCAG AA text contrast on tile captions, keyboard-accessible lightbox). Built after content sections because it requires its own sub-component tree (`GalleryGrid`, `GalleryCard`, optional `GalleryLightbox`) and because gallery rendering issues would compound with any open design-token questions if built earlier.
+**Delivers:** Kebab-case asset migration from `.planning/design-references/My Designs/` to `public/gallery/[category-slug]/[asset-slug].png` (6 categories: instagram-posts, linkedin-posts, linkedin-ads, linkedin-events, digital-signage, printables), 2 PDFs in `public/gallery/printables/` with PNG preview thumbnails and file-size labels, new `GalleryAsset` / `GalleryCategory` / `GalleryData` types, `gallery.ts` data file with 31 entries (title, alt, client, width, height, fileType), `GallerySection` + `GalleryGrid` + `GalleryCard` server components, mandatory `sizes` attribute on every `next/image`, `aspect-ratio` container per category, click-to-enlarge lightbox (likely `@base-ui/react` Dialog -- see Gaps), keyboard nav (ESC, arrows), focus return.
+**Uses:** `next/image` (first usage in project), bundled `sharp`, `@base-ui/react` Dialog primitive OR `yet-another-react-lightbox-lite`, `images.formats: ['image/avif','image/webp']` next.config addition.
+**Implements:** Categorized Gallery pattern (ARCHITECTURE.md Pattern 3).
+**Avoids:** Pitfall 3 (31 PNGs tank LCP), Pitfall 9 (25MB raw PDFs), Pitfall 13 (gallery titles dropped).
+**Complexity:** MEDIUM-HIGH -- new pattern in codebase, 31 assets require width/height entries (consider one-off `sharp`-based manifest script).
 
-**Avoids:** Pitfall 1 (vague tagline), Pitfall 2 (no metrics), Pitfall 4 (over-engineering — static data layer keeps complexity minimal)
+### Phase 5: Navigation Rewire + Retirements
+**Rationale:** Must happen after all new sections exist in the DOM. Updating navbar anchors before sections are built creates broken links during development. The `useActiveSection` hook is ID-agnostic so this is safe to do as a discrete step.
+**Delivers:** Updated `NAV_LINKS` array in `Navbar.tsx` (new 7-item lineup with short labels), new section ordering in `page.tsx` (Hero → About → CaseStudy UTD → CaseStudy Rio → Gallery → ValueProp → Contact), deletion of `ExperienceSection.tsx` / `SkillsSection.tsx` / `LeadershipSection.tsx` and their data files `experience.ts` / `skills.ts` / `leadership.ts` (kept: `education.ts` absorbed into About; retired types stay, harmless).
+**Avoids:** Anti-Pattern 1 (rename section IDs without updating navbar + hook), orphaned anchor links, Pitfall 10 (orange focus ring identical to orange hover state on navbar -- use `outline-offset: 3px` to distinguish).
+**Complexity:** LOW -- mechanical rewire, one commit.
 
----
-
-### Phase 2: Core Section Build (Structure and Content)
-
-**Rationale:** With typed data files finalized, all sections can be implemented as Server Components reading from data. Section IDs must be established here before Navbar active-section logic is written.
-
-**Delivers:** All six sections rendered with correct content, section `id` attributes locked, `app/page.tsx` composing sections in order, basic mobile-first layout on each section.
-
-**Addresses:** All table stakes sections (Hero, About, Experience, Skills, Education, Contact).
-
-**Tasks:**
-- Implement `app/page.tsx` composing all sections
-- Implement each section component reading from its data file with mobile-first Tailwind layout
-- Hero: headshot via `next/image` with `priority`, name, tagline, CTA buttons
-- Experience: metric-rich bullet cards
-- Skills: grouped by category with logos
-- Education: UTD and Gold Medal prominently featured
-- Contact: email link, LinkedIn link, Formspree/Web3Forms form integration
-- Test contact form end-to-end (submit → email received → confirmation shown)
-- Establish and lock all `section[id]` attribute values
-
-**Avoids:** Pitfall 3 (mobile-first from the start), Pitfall 5 (`next/image` for headshot), Pitfall 7 (contact form tested before moving on)
-
----
-
-### Phase 3: Navigation and Interactivity
-
-**Rationale:** Navbar depends on section IDs being finalized (Phase 2). Active-section hook depends on Navbar existing. This is a hard sequential dependency from architecture research.
-
-**Delivers:** Sticky `Navbar` with plain `<a>` anchor links, working mobile hamburger menu, `useActiveSection` hook wired for nav highlight, smooth scroll globally in CSS.
-
-**Tasks:**
-- Implement `Navbar` as Client Component with plain `<a href="#section">` anchors (not `<Link>`)
-- Add `scroll-behavior: smooth` to `html` in `globals.css`
-- Implement mobile hamburger toggle with keyboard accessibility (focus management, `aria-expanded`)
-- Implement `useActiveSection` hook with Intersection Observer
-- Wire active state into Navbar link styling
-- Implement `Footer` with copyright and social links
-
-**Avoids:** Pitfall 3 (accessible mobile nav built correctly from the start, not bolted on), anti-pattern of using Next.js `<Link>` for same-page anchors
-
----
-
-### Phase 4: Polish — Animations, Differentiators, and Accessibility QA
-
-**Rationale:** Animation and polish come after structure and content are stable. Accessibility is validated before the site is considered shippable.
-
-**Delivers:** Subtle scroll-reveal animations on section entry, metrics callout highlights, JSON-LD Person schema, OG image, accessibility passing Lighthouse, Lighthouse performance score above 90.
-
-**Tasks:**
-- Add `whileInView` fade-in-up animation wrappers to section components using Motion
-- Wrap all animations with `prefers-reduced-motion` check
-- Add metrics callout component (3-5 headline numbers near hero or section tops)
-- Add JSON-LD Person schema script block to `app/layout.tsx`
-- Create 1200x630px OG image and wire `og:image` meta tags
-- Add "Open to Work / availability" statement to hero or footer
-- Run axe or Lighthouse Accessibility audit; fix all errors (contrast, alt text, form labels, keyboard nav)
-- Add skip-navigation link before `<nav>`
-- Verify all color choices against WebAIM Contrast Checker (4.5:1 minimum for body text)
-- Run Lighthouse Performance audit; target LCP under 2.5s and CLS under 0.1
-- Test on real devices at 375px, 390px, 414px
-
-**Avoids:** Pitfall 8 (animations kept subtle, entrance-only, `prefers-reduced-motion` respected), Pitfall 9 (accessibility from this phase's checklist), Pitfall 12 (OG image for social share previews)
-
----
-
-### Phase 5: Pre-Launch QA and Deployment
-
-**Rationale:** Final verification pass before the site is shareable with recruiters.
-
-**Delivers:** Live Vercel deployment, Google Search Console submitted, all links verified, copy proofread.
-
-**Tasks:**
-- Deploy to Vercel (connect GitHub repo, zero-config)
-- Verify custom domain (if applicable) with canonical URL
-- Submit sitemap to Google Search Console
-- Validate OG tags using LinkedIn Post Inspector
-- Proofread all visible copy (nav labels, section headers, button text, bio, experience bullets, footer)
-- Check all external links (LinkedIn profile URL, email, certification verification links)
-- Run final Lighthouse audit on deployed URL (not localhost)
-- Test contact form on production
-
-**Avoids:** Pitfall 6 (SEO indexed correctly), Pitfall 7 (contact form verified on production), Pitfall 11 (typos caught before launch)
-
----
+### Phase 6: Polish, Accessibility QA, Deploy
+**Rationale:** Final verification surface -- contrast audit, Lighthouse, keyboard traversal, OG cache refresh, social debugger warm-up.
+**Delivers:** Contrast-check script run in CI (every fg/bg pair passes 4.5:1 text / 3:1 UI), Lighthouse accessibility = 100, PageSpeed Insights mobile LCP <2.5s on gallery page, axe-core clean on all sections, every interactive element keyboard-reachable with 3:1 focus-ring contrast, `prefers-reduced-motion` verified at JS level (not just CSS) via `useReducedMotion()` in every motion component, renamed OG image (`og-image-v2.png`), updated `openGraph.images` + new `twitter.images` entry, `metadataBase` verified against production domain, LinkedIn Post Inspector / Facebook Sharing Debugger / Slack cache warmed, sitemap.ts + robots.ts evaluated, JSON-LD re-verified against schema.org validator.
+**Avoids:** Pitfall 5 (OG cache staleness), Pitfall 12 (motion ignoring reduced-motion), regressions to v1.0 Phase 4 accessibility guarantees.
+**Complexity:** MEDIUM -- checklist work, high-impact.
 
 ### Phase Ordering Rationale
 
-- Content before code: experience metrics must be decided before the data shape and components are written (Pitfall 2 prevention)
-- Data layer before components: typed `src/data/*.ts` files are the dependency for all section components
-- Section IDs before Navbar: this is a hard architectural dependency documented in ARCHITECTURE.md
-- Polish after structure: animations and differentiator features added only after all content sections are stable and tested
-- QA after all features: accessibility and performance audits are most efficient as a final pass, not piecemeal
+- **Tokens before anything:** confirmed by STACK (palette swap + font is a prerequisite), ARCHITECTURE (migration-order section explicitly says "Step 1-3: tokens & fonts"), and PITFALLS (4 of 5 critical pitfalls are design-token-related and must be prevented at Phase 1).
+- **Content sections before gallery:** Hero/About/Contact/ValueProp are low-complexity rebuilds with supplied copy. Front-loading quick wins keeps momentum before the gallery's higher risk surface.
+- **Case studies before gallery:** case studies reuse the existing section pattern + add one new pattern (data-as-prop). Gallery introduces an entirely new sub-component tree + image pipeline. Easier before harder.
+- **Gallery late, navigation last:** gallery changes may ripple back into data models; navbar cannot be updated until all target anchors exist. Retire-v1.0-components is the final cleanup in the same commit so git history is the archive.
+- **Polish after integration:** WCAG/LCP verification is meaningful only once the full page renders. Running axe-core per-phase catches local issues; the final pass catches cross-section interactions (focus order across the full page, OG image vs. actual hero copy, etc.).
 
 ### Research Flags
 
-Phases with well-documented patterns — no additional research needed during planning:
-- Phase 1 (Foundation): Next.js scaffold and Tailwind v4 setup are fully documented; shadcn/ui CLI handles integration automatically
-- Phase 2 (Core sections): Server Components with static data imports is the canonical Next.js App Router pattern
-- Phase 3 (Navigation): Plain anchor links with Intersection Observer is a documented pattern; implementation code is in ARCHITECTURE.md
+**Phases needing deeper research during planning:**
+- **Phase 1 (Design Tokens):** The 27-usage accent audit requires a systematic call-site-by-call-site review. Consider a short spike to produce the spreadsheet (file, line, classname, surface color, text color, new expected contrast) BEFORE swapping the token. Also verify exact OKLCH values for #FF6A00 and #FFA559 with a conversion tool (STACK gave `oklch(0.7009 0.2012 44.77)`, ARCHITECTURE gave `oklch(0.68 0.21 40)` -- reconcile before committing).
+- **Phase 4 (Gallery):** Two open decisions need resolution during planning: (a) which lightbox library (see Gaps), (b) whether to hand-type 31 image width/height pairs vs. write a one-off `scripts/gen-gallery-manifest.ts` using `sharp` or `image-size`. Also verify `sharp` behavior on Fly.io glibc (may need `SHARP_IGNORE_GLOBAL_LIBVIPS=1`).
+- **Phase 6 (Polish/Launch):** Confirm whether `app/sitemap.ts` and `app/robots.ts` are needed (currently absent) given the static-export deployment configuration used in v1.0 Phase 4.
 
-Phases that may benefit from light validation during implementation:
-- Phase 4 (Animations): Verify `motion/react` `whileInView` API against current Motion 12.x docs if behavior is unexpected — the `framer-motion` to `motion` rebrand introduced import path changes
-- Phase 5 (Deployment): Confirm Vercel Hobby tier limits have not changed if any monetization or commercial use is anticipated
-
----
+**Phases with standard patterns (can skip `/gsd:research-phase`):**
+- **Phase 2 (Content Sections):** Brief supplies exact copy, layouts inherit v1.0 patterns, data models are simple extensions.
+- **Phase 3 (Case Studies):** 5-block structure is explicit in brief, Data-as-Prop pattern is well-understood, complexity is LOW.
+- **Phase 5 (Nav Rewire):** Mechanical work, `useActiveSection` is ID-agnostic, one-commit change.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | All versions verified against official npm and framework release blogs as of 2026-04-03 |
-| Features | HIGH | Table stakes consistent across multiple independent recruiter and industry hiring sources; anti-features directly supported by research |
-| Architecture | HIGH | Patterns verified against Next.js official docs, known open issues documented (Link anchor scroll), and real portfolio implementations |
-| Pitfalls | HIGH | Critical pitfalls corroborated by WebAIM Million 2026 report, PageSpeed research, and recruiter behavior studies |
+| Stack | HIGH | Verified against bundled Next.js 16.2.2 docs, installed `@base-ui/react@1.3.0` package inspection, direct npm registry checks (`yet-another-react-lightbox@3.30.1`, Montserrat variable font). OKLCH values computed directly from hex via OKLab formulas. |
+| Features | HIGH | Multiple corroborating 2025-2026 sources (Semplice, Format, Copyfolio, Toptal, Humbleteam, Neue World, IxDF). Brief supplies exact copy for all new sections. Direct filesystem verification of 31-asset inventory across 6 categories. |
+| Architecture | HIGH | Direct inspection of every file in the current `src/` tree (layout, page, globals.css, all 9 components with accent usages, 7 data files, types, hooks, next.config, package.json, components.json). Token migration sequence verified against Tailwind v4 `@theme` behavior. |
+| Pitfalls | HIGH | Contrast ratios computed directly from brand hex values using WCAG 2.1/2.2 relative luminance formula (not looked up). Next.js 16 facts verified against `node_modules/next/dist/docs/`. 27 accent-usage count verified via grep on current tree. |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Contact form service selection:** Research confirms third-party services (Formspree, Web3Forms, EmailJS) are the correct pattern. The specific service choice (pricing tiers, rate limits) should be confirmed against current offerings before implementation.
-- **Harsha's actual resume metrics:** The content research assumes measurable achievements exist in the source resume. If specific numbers are unavailable for some roles, the experience section strategy may need to fall back to scale indicators — this should be confirmed during Phase 1 content prep, not during section implementation.
-- **Custom domain:** If a custom domain is planned, canonical URL, DNS configuration, and Vercel domain setup add minor complexity to Phase 5. Not researched in detail because it is not confirmed in scope.
+Cross-cutting decision points where the 4 research tracks diverged or left open questions that should be resolved before or during planning:
 
----
+- **Gallery lightbox library decision:** STACK recommends `@base-ui/react` Dialog (already installed as `@base-ui/react@1.3.0`, zero new dependencies, ships full accessibility primitives including focus trap + portal + backdrop + escape-to-close). FEATURES recommends `yet-another-react-lightbox` (lite variant ~5 KB gzip, purpose-built for image galleries, swipe/arrow keys built in). **Recommendation: default to `@base-ui/react` Dialog for the baseline** — it is already paid for, sufficient for click-to-enlarge on a grouped gallery where each asset has a visible caption in the grid, and avoids a new dependency. Escalate to `yet-another-react-lightbox-lite` only if the milestone evolves to demand swipe-between-assets carousel behavior across all 31 items. Handle during Phase 4 planning.
+
+- **Image asset location decision:** STACK recommends `src/assets/designs/` with static ES imports (auto width/height, auto blurDataURL, long-TTL cache headers). ARCHITECTURE recommends `public/gallery/[category-slug]/` (handles 2 PDFs which cannot be imported, works with existing `output: "standalone"` Fly.io config, single mental model for all assets). **Recommendation: follow ARCHITECTURE's guidance and use `public/gallery/[category-slug]/` for a unified rule** — the PDF exception and existing standalone-deploy mode make `public/` the pragmatic choice for this project, and 31 assets with well-known social-media aspect ratios make manual width/height entries cheap. Can still use `placeholder="empty"` or generate blur stubs via a one-off `sharp` script if desired. Handle during Phase 4 planning.
+
+- **Section ID retirements safe but verify atomic updates:** Experience, Skills pill-chips, and Leadership components are superseded by the brief. Navbar anchor IDs must change from `experience`/`skills`/`leadership` to `case-study-utd`/`case-study-rio`/`gallery`/`value-prop`. **The `useActiveSection` hook is ID-agnostic** (queries `document.querySelectorAll("section[id]")` at runtime per ARCHITECTURE verification), so this is safe -- but all three places (section JSX, `NAV_LINKS` array, any cross-section anchor hrefs) must be updated atomically. Flagged for Phase 5.
+
+- **No `next/image` usage currently in codebase:** the pattern must be established from scratch in Phase 4. Establish strict rules in the first gallery component (mandatory `sizes`, `aspect-ratio` wrapper, lazy-load default, `preload` not `priority`, `placeholder="blur"` or `"empty"`) and reuse across all 31 assets. 50MB raw → target <500KB first-paint budget on mobile.
+
+- **`metadataBase` and JSON-LD canonical URL drift:** `layout.tsx` currently hardcodes `https://harshavardhini.com` in two places (`alternates.canonical`, `jsonLd.url`). Verify the production domain matches before Phase 6 deploy verification.
+
+- **Exact OKLCH values for orange tokens:** STACK computed `oklch(0.7009 0.2012 44.77)` for #FF6A00; ARCHITECTURE used approximation `oklch(0.68 0.21 40)`. Reconcile with an authoritative hex-to-OKLCH converter before committing to `@theme` in Phase 1.
 
 ## Sources
 
-### Primary (HIGH confidence — official documentation)
-- nextjs.org/blog/next-16 — Next.js 16 release, React Compiler, App Router stability
-- tailwindcss.com/blog/tailwindcss-v4 — Tailwind v4 stable release, CSS-first config
-- tailwindcss.com/docs/guides/nextjs — official PostCSS setup for Next.js
-- ui.shadcn.com/docs/tailwind-v4 — shadcn/ui Tailwind v4 support confirmation
-- motion.dev/docs/react — Motion 12.x canonical docs (whileInView API)
-- nextjs.org/docs/app/getting-started/fonts — next/font/google patterns
-- nextjs.org/docs/app/getting-started/project-structure — App Router file organization
-- nextjs.org/docs/app/getting-started/metadata-and-og-images — Metadata API
-- nextjs.org/docs/app/guides/json-ld — JSON-LD Person schema in Next.js
-- webaim.org/projects/million/ — WebAIM Million 2026 accessibility failure rates
+### Primary (HIGH confidence)
+- **Bundled Next.js 16.2.2 documentation** (`node_modules/next/dist/docs/`) — `getting-started/12-images.md`, `getting-started/13-fonts.md`, `api-reference/components/image.md` (`preload` prop, `priority` deprecation), `api-reference/components/font.md` (variable option, adjustFontFallback), `02-guides/self-hosting.md` (sharp on Fly.io/glibc), `api-reference/file-conventions/metadata/opengraph-image.md`
+- **Installed package inspection** — `@base-ui/react@1.3.0` Dialog primitive verified locally, `package.json` dependency tree, Tailwind v4 `@theme` behavior, shadcn/ui `components.json` (`baseColor: "neutral"`)
+- **Direct codebase inspection** — all 9 files with accent-prefixed classes (27 usages), 7 data files, all section components, `layout.tsx`, `page.tsx`, `globals.css`, `Navbar.tsx`, `useActiveSection.ts`, `next.config.ts`
+- **Filesystem audit** — 31 design assets counted across 6 categories in `.planning/design-references/My Designs/`, 49MB total
+- **WCAG 2.1/2.2 contrast ratios** — computed directly from brand hex values using relative-luminance formula (11 combinations verified by calculation)
+- **OKLCH palette values** — computed from hex via OKLab formulas (sRGB → linear RGB → LMS → OKLab → OKLCH)
+- **[Next.js 16 Release Blog](https://nextjs.org/blog/next-16)** — October 21, 2025
+- **[Tailwind CSS v4 Announcement](https://tailwindcss.com/blog/tailwindcss-v4)** — stable January 22, 2025
+- **[shadcn/ui Tailwind v4 docs](https://ui.shadcn.com/docs/tailwind-v4)** — February 2025 support
+- **[Montserrat on Google Fonts](https://fonts.google.com/specimen/Montserrat)** + **[GitHub repo](https://github.com/JulietaUla/Montserrat)** — variable font confirmed
+- **[yet-another-react-lightbox npm](https://www.npmjs.com/package/yet-another-react-lightbox)** — v3.30.1 (March 26 2026), React 19 peer
 
-### Secondary (HIGH confidence — corroborated industry sources)
-- marketermilk.com/blog/marketing-portfolio-examples — 2026 portfolio feature expectations
-- brainstation.io/career-guides/how-to-build-a-digital-marketing-portfolio — recruiter behavior data
-- methodrecruiting.com/digital-marketing-hiring-trends-2026 — hiring manager expectations
-- pagepro.co/blog/common-nextjs-mistakes-core-web-vitals — Next.js performance anti-patterns
-- github.com/vercel/next.js/issues/51721 — Next.js Link smooth scroll open issue (confirmed)
+### Secondary (MEDIUM confidence)
+- **[WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)** — threshold reference
+- **[Orange You Accessible? -- Bounteous](https://www.bounteous.com/insights/2019/03/22/orange-you-accessible-mini-case-study-color-ratio/)** — orange contrast challenges documented
+- **[WCAG 2.2 Level AA Contrast Requirements](https://www.makethingsaccessible.com/guides/contrast-requirements-for-wcag-2-2-level-aa/)**
+- **[Next.js Image Optimization -- DebugBear](https://www.debugbear.com/blog/nextjs-image-optimization)**
+- **[Custom fonts with next/font -- Vercel](https://vercel.com/blog/nextjs-next-font)**
+- **[yet-another-react-lightbox-lite GitHub](https://github.com/igordanchenko/yet-another-react-lightbox-lite)** — ~5KB gzip, React 18+ (React 19 peer claim unverified, inferred from sibling package)
+- **[Semplice: How to write case studies](https://www.semplice.com/how-to-write-case-studies-for-your-portfolio)**, **[Format design case study guide](https://www.format.com/magazine/resources/design/how-to-write-design-case-study)**, **[IxDF UX case studies](https://ixdf.org/literature/article/how-to-write-great-case-studies-for-your-ux-design-portfolio)** — case study convention consensus
+- **[Humbleteam via Neue World black-and-orange roundup](https://www.neue.world/journal/inspiring-black-and-orange-website-designs)** — brand restraint model
+- **[Vercel OG image refresh guide](https://www.beyondspace.studio/blog/how-to-refresh-open-graph-image)**, **[OG cache refresh trick](https://www.8p-design.com/en/blog/simple-trick-refresh-open-graph-cache)**
 
-### Tertiary (MEDIUM confidence — single or secondary sources)
-- Recruiter "55-second scan" and "78% expect portfolio" statistics — cited by multiple sources but derived from secondary research; treat as directional, not precise
+### Tertiary (LOW confidence / needs validation)
+- **Exact OKLCH values for #FF6A00 and #FFA559** — STACK and ARCHITECTURE give slightly different approximations. Verify with an authoritative converter before committing to `@theme`.
+- **`sharp` Fly.io glibc behavior** — `SHARP_IGNORE_GLOBAL_LIBVIPS=1` may be required per Next.js self-hosting docs. Verify in Phase 4 against existing Fly.io Dockerfile.
 
 ---
-*Research completed: 2026-04-03*
+*Research completed: 2026-04-04*
 *Ready for roadmap: yes*

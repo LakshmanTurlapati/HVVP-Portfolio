@@ -1,212 +1,333 @@
-# Technology Stack
+# Stack Research — v2.0 Brand Redesign & Creative Portfolio
 
-**Project:** Harsha Vardhini Portfolio
-**Domain:** Single-page marketing professional portfolio
-**Researched:** 2026-04-03
-**Research Mode:** Ecosystem
+**Domain:** Personal portfolio / creative gallery (milestone addition to existing Next.js 16 app)
+**Researched:** 2026-04-04
+**Confidence:** HIGH
 
----
+## Scope
 
-## Recommended Stack
+This research ONLY covers stack additions for milestone v2.0. The base stack (Next.js 16.2.2, React 19.2.4, Tailwind v4, shadcn/ui, motion 12.38.0, next/font Inter, Vercel + Fly.io) is already validated and deployed in v1.0. Nothing in that base stack is being replaced.
 
-### Core Framework
+**New v2.0 requirements under investigation:**
+1. Add Montserrat Bold as a display font alongside Inter
+2. Migrate the Tailwind v4 `@theme` palette to DeepBlack/Orange/White
+3. Render 31 design assets (29 PNG + 2 PDF) as a performant, categorised gallery
+4. Optional lightbox for full-resolution viewing
+5. Keep bundle size reasonable (portfolio is a job-hunt tool, must stay fast on mobile)
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Next.js | 16.x (latest: 16.2.2) | App framework, routing, SSG | Industry standard for React portfolios. App Router is stable. Turbopack default means fast dev iteration. Static export or Vercel deploy is trivial. React 19 included. |
-| React | 19.x (bundled with Next.js 16) | UI rendering | Comes with Next.js. React Compiler (stable in Next.js 16) auto-memoizes — no manual `useMemo`/`useCallback` needed on a simple portfolio. |
-| TypeScript | 5.x (minimum 5.1 required by Next.js 16) | Type safety | Default in `create-next-app`. Catches mistakes early. Small overhead for a simple project, zero downside. |
+**Critical discovery upfront:** the raw design assets weigh **49 MB** across 31 files (largest PNG is 3.4 MB). Ship-as-is is not an option. Next.js Image optimization + static imports are mandatory, not optional.
 
-**Confidence: HIGH** — Verified against nextjs.org/blog/next-16 (published October 21, 2025) and npm (16.2.2, published 2 days ago as of 2026-04-03).
+**Second critical discovery:** `@base-ui/react@1.3.0` is **already installed** and ships a fully accessible `Dialog` primitive with portal/backdrop/focus-trap. No new lightbox dependency is needed unless advanced features (pinch-zoom, thumbnails strip) are explicitly desired.
 
-### Styling
+## Recommended Stack Additions
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Tailwind CSS | 4.x (stable since January 22, 2025, latest on GitHub) | Utility-first CSS | CSS-first configuration (no tailwind.config.js). Single `@import "tailwindcss"` in globals.css. 5x faster full builds, 100x faster incremental. @theme directive replaces JS config for custom colors and spacing. Perfect match for the clean minimal design system this project requires. |
-| @tailwindcss/postcss | 4.x | PostCSS plugin for Tailwind v4 | Replaces the old `tailwindcss` postcss plugin. Single plugin in postcss.config.mjs. |
+### Core Additions (Required)
 
-**Do NOT use:** Tailwind v3. It still works but v4 is stable, faster, and the new default in `create-next-app`. No reason to start a greenfield project on the old version.
+| Technology | Version | Purpose | Why Recommended |
+|------------|---------|---------|-----------------|
+| `next/font/google` Montserrat import | Bundled with Next.js 16.2.2 | Display heading font (brief specifies Montserrat Bold) | Same mechanism already used for Inter — self-hosted, zero layout shift, zero extra dependency. Montserrat ships as a **variable font on Google Fonts**, so a single file covers weight 100–900. Pair it with the existing Inter by exposing a second CSS variable (`--font-montserrat`) and using it from a `font-display` Tailwind utility. |
+| Static imports for gallery images | Built into Next.js | Co-located design assets with automatic width/height/blurDataURL | When you `import img from "./foo.png"` and pass it as `<Image src={img}>`, Next.js auto-derives intrinsic dimensions AND generates a tiny `blurDataURL` for placeholder blur-up — no manual measurement, no CLS, no extra tooling. This is the single biggest DX win for a 31-asset gallery. |
+| Tailwind v4 `@theme` palette update | 4.x (already installed) | Swap v1.0 muted-neutral tokens for DeepBlack/Orange/White | No new dependency. Just edit `globals.css`. Tailwind v4 reads `--color-*` variables from `@theme` and generates utility classes (`bg-brand-orange`, `text-brand-black`, etc.). OKLCH values computed in this doc. |
 
-**Do NOT use:** CSS Modules. They add per-component file overhead with no benefit over Tailwind for a single-page portfolio. Harder to maintain design consistency across sections.
+### Supporting Libraries (Optional)
 
-**Do NOT use:** styled-components or Emotion. Runtime CSS-in-JS adds bundle weight and hydration cost. Not needed.
+| Library | Version | Purpose | When to Use |
+|---------|---------|---------|-------------|
+| `@base-ui/react` Dialog (**already installed** as `@base-ui/react@^1.3.0`) | 1.3.0 | Accessible modal primitive for click-to-enlarge lightbox | **Default recommendation.** Already a transitive dep in this project. Exports `Dialog.Root`, `Dialog.Backdrop`, `Dialog.Portal`, `Dialog.Popup`, `Dialog.Close` — all headless and WCAG-compliant (focus trap, escape-to-close, scroll-lock). Wrap a `next/image` with `fill` inside `Dialog.Popup` for a minimal lightbox. Zero new KB added to the bundle. |
+| `yet-another-react-lightbox-lite` | 1.x (latest on npm, ~5 KB gzip) | Pre-built lightbox with swipe/zoom/keyboard nav | **Only if** the brief escalates from "click to enlarge" to "carousel across all gallery items with zoom." 5 KB is small, but `@base-ui/react` Dialog is already paid-for and sufficient for a 6-category grouped gallery where users click one asset at a time. |
+| `yet-another-react-lightbox` (full) | 3.30.1 (Mar 26 2026) | Lightbox with plugin ecosystem (thumbnails, zoom, captions, fullscreen, slideshow) | **Do not use on this project.** The full version supports React 19 and has Next.js Image integration docs, but its plugin set (thumbnails strip, fullscreen, slideshow) is overkill for a portfolio gallery where each asset has a title caption already rendered in the grid. Use only if you later build a multi-asset carousel with 50+ items. |
 
-**Confidence: HIGH** — Verified against tailwindcss.com/blog/tailwindcss-v4 and tailwindcss.com/docs/guides/nextjs.
+### Development / Config Additions
 
-### Component Library (Optional, Recommended)
+| Tool | Purpose | Notes |
+|------|---------|-------|
+| `sharp` (auto-installed by Next.js) | Runtime image optimization | Comes bundled with Next.js 16 — no manual install needed. Handles PNG → WebP/AVIF conversion, resize, blur placeholder generation. Already working because v1.0 uses `next/image` for the resume OG image. |
+| `public/designs/` folder structure | Serve static PDFs and any hero-level previews | For the 2 PDFs (brochures), link to them from `/designs/` as plain `<a href="/designs/brochure.pdf" target="_blank">` — PDFs are not optimizable and should never be wrapped in `<Image>`. |
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| shadcn/ui | Latest (Tailwind v4 support stable as of February 2025) | UI primitives (buttons, cards, nav) | Copy-paste components, not a dependency. Fully supports Tailwind v4. Components are owned by the project — no version lock-in. CLI auto-detects Tailwind version. Uses tw-animate-css (not the deprecated tailwindcss-animate). |
+## Installation
 
-**Use shadcn/ui selectively:** Only pull in components you actually use (Button, Card, NavigationMenu, Separator). Do not install the entire library.
+```bash
+# NO new dependencies required for the baseline plan.
+# The recommended approach uses only what is already in package.json.
 
-**Do NOT use:** Material UI, Chakra UI, or Ant Design. They impose opinionated design systems that conflict with the custom minimal aesthetic this portfolio needs.
+# Optional — ONLY if the baseline Dialog lightbox is judged insufficient
+# during implementation:
+npm install yet-another-react-lightbox-lite
+```
 
-**Confidence: HIGH** — Verified against ui.shadcn.com/docs/tailwind-v4 and ui.shadcn.com/docs/changelog.
+Changes required in existing files (no package additions):
 
-### Animation
+1. **`src/app/layout.tsx`** — add Montserrat import alongside Inter
+2. **`src/app/globals.css`** — replace `@theme` color tokens with brand palette
+3. **`public/designs/`** — copy the 2 PDFs (for direct link download)
+4. **`src/assets/designs/`** — place 29 PNGs here for static imports (or a subfolder per category)
+5. **`next.config.js`** — add `images.formats: ['image/avif', 'image/webp']` for modern format output
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Motion (formerly Framer Motion) | 12.x (latest: 12.38.0 as of mid-March 2026) | Scroll-triggered animations, section reveal, subtle transitions | The package was rebranded from `framer-motion` to `motion`. Import from `motion/react` instead of `framer-motion`. Deeply integrated with React lifecycle. Supports `useInView` for scroll-triggered reveals — the primary animation pattern for a portfolio. Layout animations, gesture support, and spring physics available if needed. |
+## Font Loading Pattern (`src/app/layout.tsx`)
 
-**Install as:** `npm install motion` (not `npm install framer-motion` — the old name still works but the canonical package is now `motion`).
-
-**Animation scope for this project:** Keep it conservative. Use `initial`/`animate`/`whileInView` on section wrappers for fade-up-on-scroll. Avoid over-animating — this is a professional recruiter-facing site, not a creative agency showcase.
-
-**Do NOT use:** GSAP. Overkill for this use case. Adds complexity and the license model changed for commercial work.
-
-**Do NOT use:** React Spring. Larger bundle, more complex API for the same scroll reveals Motion handles cleanly.
-
-**Do NOT use:** CSS-only animations (keyframes). Fine for hover states, but cannot handle scroll-triggered reveals without an IntersectionObserver wrapper — Motion provides this out of the box.
-
-**Confidence: HIGH** — Verified against motion.dev and npmjs.com/package/framer-motion (version 12.38.0, active maintenance confirmed).
-
-### Font Loading
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| next/font/google | Bundled with Next.js | Inter font loading | Self-hosts fonts — no external request to Google servers at runtime. Eliminates FOUT/FOIT (flash of unstyled/invisible text). Applies `size-adjust` to fallback font so layout shift is zero. Variable font support means a single font file covers all weights. |
-
-**Pattern to follow:**
-```ts
-// app/layout.tsx
-import { Inter } from 'next/font/google'
+```tsx
+import { Inter, Montserrat } from 'next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',   // Expose as CSS variable for Tailwind
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  weight: ['700', '800'], // only what the design needs — do NOT pull all 9 weights
   display: 'swap',
 })
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>{children}</body>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
+      <body className="bg-background text-foreground font-sans">
+        {children}
+      </body>
     </html>
   )
 }
 ```
 
-```css
-/* app/globals.css — Tailwind v4 CSS-first config */
-@import "tailwindcss";
+**Why weight `['700', '800']` not the variable font axis:** Montserrat's static subsets are smaller per-weight than loading the full variable-axis file when only two weights are used. The brief says "Montserrat Bold" (700) for headings — anything heavier (800 ExtraBold) is a nice-to-have for the hero. Pulling 9 weights would add ~250 KB of unused font data. If the design later calls for 4+ weights, switch to the variable font by omitting the `weight` key.
 
+## Tailwind v4 Theme Update (`src/app/globals.css`)
+
+Replace the existing `@theme` block with the computed OKLCH values:
+
+```css
 @theme {
+  /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
+
+  /* Brand palette — Harsha v2.0 */
+  --color-brand-black: oklch(0.1684 0 0);                /* #0F0F0F DeepBlack */
+  --color-brand-orange: oklch(0.7009 0.2012 44.77);      /* #FF6A00 primary accent */
+  --color-brand-orange-soft: oklch(0.7976 0.1404 58.86); /* #FFA559 hover/highlight */
+  --color-brand-white: oklch(0.9821 0 0);                /* #F9F9F9 background */
+
+  /* Semantic tokens mapped to brand palette */
+  --color-background: var(--color-brand-white);
+  --color-foreground: var(--color-brand-black);
+  --color-accent: var(--color-brand-orange);
+  --color-accent-hover: var(--color-brand-orange-soft);
+  --color-muted: oklch(0.95 0 0);
+  --color-muted-foreground: oklch(0.35 0 0);
+  --color-card: oklch(1 0 0); /* pure white card on off-white background */
 }
 ```
 
-**Do NOT use:** `<link>` tags pointing to fonts.googleapis.com. This creates an external dependency, adds a render-blocking network request, and forfeits the FOUT protection that `next/font` provides.
+OKLCH values were computed directly from the hex codes using the OKLab color-space formulas (sRGB → linear RGB → LMS → OKLab → OKLCH). Chroma is zero for the neutrals because `#0F0F0F`, `#F9F9F9`, and `#FFFFFF` are pure greys in sRGB.
 
-**Do NOT use:** Local font files managed manually. `next/font/google` handles download, self-hosting, and cache headers automatically.
+**Contrast check (manual, must re-verify in accessibility phase):**
+- `#0F0F0F` on `#F9F9F9` → ~19:1 (far exceeds WCAG AA 4.5:1 for body, AAA 7:1 large)
+- `#FF6A00` on `#F9F9F9` → ~3.4:1 (FAILS AA 4.5:1 for body text; PASSES 3:1 for large text/UI and non-text elements)
+- `#FF6A00` on `#0F0F0F` → ~5.6:1 (passes AA body)
 
-**Confidence: HIGH** — Verified against nextjs.org/docs/app/getting-started/fonts and confirmed in Next.js 16 App Router docs.
+**Implication:** Orange on the off-white background must **only** be used for large headlines (18pt+ or 14pt+ bold), buttons/CTAs (where 3:1 UI contrast applies), icons, and accent strokes — **never body paragraphs**. Use black or a darkened orange (~`oklch(0.55 0.18 40)`) for orange-themed body text. Flag this for the accessibility phase.
 
-### Deployment
+## Gallery Image Pattern
 
-| Platform | Tier | Why |
-|----------|------|-----|
-| Vercel | Free (Hobby) | Built by the Next.js team. Zero-config deployment. Automatic preview URLs per commit. CDN included. 100GB bandwidth/month — more than enough for a portfolio. Edge network. Free tier is appropriate for a personal non-commercial portfolio. |
+The recommended pattern is a CSS Grid of `next/image` components with static imports, grouped by the 6 categories, with a `@base-ui/react` `Dialog` opened on click:
 
-**Confidence: HIGH** — Verified against vercel.com free tier and Netlify vs Vercel comparisons from multiple sources.
+```tsx
+// src/components/sections/CreativeWork.tsx
+'use client'
 
-**Alternative if needed:** Netlify. Also free, also supports Next.js App Router, also zero-config. Choose Netlify if you anticipate monetizing the site or if the free tier's commercial use concern is a factor. For a personal portfolio, Vercel's free Hobby tier is appropriate.
+import Image, { type StaticImageData } from 'next/image'
+import { Dialog } from '@base-ui/react/dialog'
+import { useState } from 'react'
 
-**Do NOT use:** GitHub Pages. Does not support Next.js SSR or API routes. Limited to fully static exports with manual configuration. Not worth the friction when Vercel is free and zero-config.
+// Static imports — Next.js resolves width/height/blurDataURL at build time
+import igRealId from '@/assets/designs/instagram/pp-ig-real-id-post.png'
+import igLastCall from '@/assets/designs/instagram/utdg-ig-last-call.png'
+// ...29 more imports
 
-**Do NOT use:** Self-hosted VPS (DigitalOcean, Linode). Operational overhead with no benefit for a static/SSG portfolio.
+type Asset = { src: StaticImageData; title: string; category: string }
 
----
+const assets: Asset[] = [
+  { src: igRealId, title: 'Real ID Post', category: 'Instagram Posts' },
+  // ...
+]
 
-## Complete Dependency List
+export function CreativeWork() {
+  const [active, setActive] = useState<Asset | null>(null)
 
-### Production Dependencies
+  return (
+    <section aria-labelledby="creative-work-heading">
+      {/* ...category-grouped grid... */}
+      {assets.map((a) => (
+        <button
+          key={a.title}
+          onClick={() => setActive(a)}
+          className="group overflow-hidden rounded-md"
+        >
+          <Image
+            src={a.src}
+            alt={a.title}
+            placeholder="blur"        // auto from static import
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="transition-transform group-hover:scale-105"
+          />
+          <figcaption className="mt-2 text-sm">{a.title}</figcaption>
+        </button>
+      ))}
 
-```bash
-npm install motion
+      <Dialog.Root open={!!active} onOpenChange={(o) => !o && setActive(null)}>
+        <Dialog.Portal>
+          <Dialog.Backdrop className="fixed inset-0 bg-brand-black/80" />
+          <Dialog.Popup className="fixed inset-4 flex items-center justify-center">
+            {active && (
+              <Image
+                src={active.src}
+                alt={active.title}
+                placeholder="blur"
+                sizes="100vw"
+                className="max-h-full w-auto"
+              />
+            )}
+          </Dialog.Popup>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </section>
+  )
+}
 ```
 
-### Dev Dependencies (handled by create-next-app + shadcn init)
+**Key Next.js 16 Image rules applied:**
+- **`loading="lazy"` is the default** — no explicit prop needed. Images outside the viewport will not download until scrolled near.
+- **`priority` was deprecated in Next.js 16.** Use `preload` instead for above-the-fold images. The gallery has no preloaded images — the Hero card images (if any) are the only candidates for `preload={true}`.
+- **`sizes` attribute is mandatory** when using responsive CSS — without it Next.js assumes `100vw` and downloads the largest variant. For a 3-column desktop grid: `sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"`.
+- **Static imports automatically provide `blurDataURL`** (the tiny placeholder) — do not write manual blur data URLs.
 
-```bash
-# Bootstrap project — includes Next.js 16, React 19, TypeScript, Tailwind v4
-npx create-next-app@latest harsha-portfolio \
-  --typescript \
-  --eslint \
-  --tailwind \
-  --app \
-  --src-dir \
-  --import-alias "@/*"
+## Why Not Store Images in `public/`
 
-# Add shadcn/ui (select only needed components)
-npx shadcn@latest init
-npx shadcn@latest add button card separator
+Two reasons:
 
-# Add animation library
-npm install motion
-```
+1. **Static imports from `src/assets/` get automatic dimension inference and blurDataURL generation.** Files in `public/` are served verbatim — no build-time hashing, no intrinsic size detection, no blur placeholder unless you generate it manually.
+2. **Long-term cache headers.** Files in `public/` get a short-TTL `Cache-Control`. Statically imported images get a content-hash in the filename and `Cache-Control: public, max-age=31536000, immutable`, per the bundled Next.js self-hosting docs.
 
-### PostCSS Config
+**Exception:** the 2 PDFs **must** go in `public/designs/` since `next/image` cannot process PDFs. Link with plain `<a href="/designs/file.pdf" target="_blank" rel="noopener">`.
 
-```js
-// postcss.config.mjs
-const config = {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
-export default config;
-```
+## Bundle-Size Impact Summary
 
----
+| Addition | Bundle Cost | Notes |
+|----------|------------|-------|
+| Montserrat font (2 weights, latin subset) | ~40–60 KB WOFF2, self-hosted, cached | Similar to Inter's current footprint. Preloaded by `next/font` with `font-display: swap`. |
+| Tailwind `@theme` palette change | 0 KB | Just CSS variable rewrites. |
+| 31 design assets via `next/image` | **Net reduction vs shipping raw PNGs.** Originals = 49 MB. Next.js serves AVIF/WebP at viewport-appropriate widths → expect 200–400 KB per image at 800 px wide × optimized = ~5–10 MB total, lazy-loaded only when visible. The *initial page load* adds zero gallery weight because lazy loading delays download until scroll. | |
+| `@base-ui/react` Dialog | 0 KB NEW | Already installed. Tree-shakes unused primitives. |
+| No lightbox library | 0 KB | Avoided ~5 KB (lite) or ~40 KB (full) gzipped. |
+
+**Total JS bundle delta vs v1.0:** expected < 5 KB gzipped for the Dialog import (already paid for) + gallery component code. Font file delta is ~50 KB cached WOFF2.
 
 ## Alternatives Considered
 
-| Category | Recommended | Alternative | Why Not |
-|----------|-------------|-------------|---------|
-| Framework | Next.js 16 | Vite + React (SPA) | Next.js gives SEO metadata control, `next/font`, `next/image` optimization, and Vercel zero-config deploy. The project explicitly requires SEO-optimized metadata — a pure SPA cannot do this well. |
-| Framework | Next.js 16 | Astro | Astro is excellent for content-heavy sites. Portfolio is simple enough that either works, but the project constraint specifies React/Next.js. Astro would require a different mental model. |
-| Styling | Tailwind v4 | Tailwind v3 | Greenfield project. v4 is stable, faster, and the create-next-app default. No reason to use older version. |
-| Styling | Tailwind | CSS Modules | Tailwind enforces design-system consistency through utility classes. CSS Modules allow arbitrary values that drift over time. For a small team/solo project, Tailwind is strictly better. |
-| Animation | Motion | GSAP | GSAP license changed — now requires a paid license for non-open-source commercial projects. The portfolio is personal/professional-use and motion is simpler for scroll-reveal patterns. |
-| Animation | Motion | React Spring | Comparable bundle size, but more complex API for the same result. Motion's `whileInView` is the simplest API for portfolio scroll animations. |
-| Fonts | next/font/google | Google Fonts CDN link | CDN link: render-blocking, external request, FOUT/FOIT risk, no layout shift prevention. next/font self-hosts and eliminates all of these issues. |
-| Deployment | Vercel | Netlify | Both work. Vercel is the Next.js creator — deepest integration, no config. Netlify is a valid backup. |
-| Deployment | Vercel | GitHub Pages | GitHub Pages cannot run Next.js App Router without full static export mode, which disables API routes and metadata flexibility. |
+| Recommended | Alternative | When to Use Alternative |
+|-------------|-------------|-------------------------|
+| Static imports from `src/assets/designs/` | Files in `public/designs/` | If Harsha wants to swap assets without a rebuild (e.g. via a future CMS). For a portfolio with fixed content, static imports are strictly better. |
+| `@base-ui/react` Dialog lightbox | `yet-another-react-lightbox-lite` (~5 KB gzip) | If click-to-enlarge evolves into a full carousel across all 31 items with swipe gestures and zoom. Lite version supports React 18+, has keyboard/touchpad/touchscreen nav and built-in zoom. |
+| `@base-ui/react` Dialog lightbox | `yet-another-react-lightbox` (full, v3.30.1) | Only if thumbnails strip, slideshow, fullscreen plugin, or caption overlay plugins are needed. Overkill for a 31-asset grouped gallery with titles already visible. |
+| Montserrat via `next/font/google` with `weight: ['700', '800']` | Montserrat variable font (same import, omit `weight`) | Switch to variable if the design adds 4+ display weights later. For now, 2 static weights is smaller on the wire. |
+| Native HTML `<dialog>` element | `@base-ui/react` Dialog | `<dialog>` is baseline-supported in 2026 but requires more imperative code for close-on-outside-click, focus restore, scroll-lock, and React state sync. Base UI wraps all of this. |
+| CSS Grid gallery layout | `react-photo-album` / masonry library | Only if the design calls for a true masonry (variable-height rows that pack like Pinterest). The brief describes "6 categories with titles" which is a uniform grid — CSS Grid is free and accessible. |
 
----
+## What NOT to Use
 
-## SEO Notes (Relevant to Stack)
+| Avoid | Why | Use Instead |
+|-------|-----|-------------|
+| `react-image-lightbox` | Unmaintained since 2020. Uses class components. No React 18/19 support. | `@base-ui/react` Dialog (already installed) or `yet-another-react-lightbox-lite` |
+| `priority` prop on `<Image>` | **Deprecated in Next.js 16.** | `preload={true}` for LCP images, or rely on default `loading="lazy"` for gallery items |
+| Wrapping PDFs in `<Image>` | `next/image` only supports jpg/png/webp/avif/gif/svg. PDFs will break the build. | Plain `<a href="/designs/file.pdf" target="_blank" rel="noopener">` link |
+| Raw Google Fonts `<link>` tag | Render-blocking, external request, FOUT/FOIT, violates same policy that already chose `next/font` in v1.0 | `next/font/google` Montserrat import (same pattern as Inter) |
+| Loading Montserrat with all 9 weights (100–900) | Adds ~250 KB of unused font files; hurts LCP on mobile | `weight: ['700', '800']` — only what the design uses |
+| `loading="eager"` on gallery images | Forces all 31 images to download on page load regardless of viewport position. Catastrophic for LCP. | Default `loading="lazy"` (omit the prop) |
+| Manual `blurDataURL` generation for static imports | Already auto-generated by Next.js at build time | Just use `placeholder="blur"` with static imports |
+| Storing originals in `public/` without optimization | 49 MB of raw PNGs would blow Fly.io bandwidth and Vercel free-tier budget | Static imports → runtime AVIF/WebP conversion via `sharp` |
+| `framer-motion` package name | Renamed to `motion` (already correct in v1.0). Importing from `framer-motion` will fail. | Keep using `motion/react` — already correct in `AnimatedSection.tsx` |
 
-Next.js 16 App Router provides a `Metadata` API exported from page files. For this portfolio:
+## Stack Patterns by Variant
 
-```ts
-// app/layout.tsx
-export const metadata: Metadata = {
-  title: 'Harsha Vardhini Veeravalli Prabu — Digital Marketing',
-  description: 'MS Marketing @ UT Dallas. SEO, SEM, social media, and campaign optimization specialist.',
-  openGraph: { ... },
-}
-```
+**If the gallery grows beyond 50 assets later:**
+- Switch to `yet-another-react-lightbox-lite` for carousel navigation between items
+- Consider route-based pagination or a dedicated `/work/[slug]` page per asset
+- Evaluate `react-photo-album` if masonry layout is needed
 
-This renders as real `<meta>` tags in SSG output — crawlable by Google and LinkedIn preview cards. This is why a pure SPA was rejected.
+**If the design adds 4+ display font weights:**
+- Switch Montserrat to the variable-font import (omit `weight` entirely)
+- Keep Inter static (body text uses at most 400/500/600/700)
 
----
+**If contrast fails WCAG AA on orange-themed text during the accessibility audit:**
+- Darken the accent to ~`oklch(0.55 0.18 40)` (hex approx `#D45500`) for body-text usage
+- Reserve the brand `#FF6A00` strictly for headlines ≥24 px bold and UI elements (buttons, borders)
+
+**If site deploys to Fly.io (existing) and image optimization memory spikes:**
+- Next.js 16 self-hosting docs note sharp may need `SHARP_IGNORE_GLOBAL_LIBVIPS=1` on glibc Linux
+- Verify in execution phase against the existing `fly.toml` / Dockerfile
+
+## Version Compatibility
+
+| Package A | Compatible With | Notes |
+|-----------|-----------------|-------|
+| `next@16.2.2` | `next/font/google` Montserrat | Works. `next/font` ships bundled; any Google Fonts family name is supported. |
+| `next@16.2.2` | `@base-ui/react@1.3.0` Dialog | Works. Base UI is React 18/19 compatible and already resolves in this project. |
+| `next@16.2.2` | `yet-another-react-lightbox-lite` | Works (React 18+ peer). The lite version does not explicitly list React 19 in its peer deps but the full sibling (v3.30.1) does, and the two share an author and codebase lineage. **Confidence: MEDIUM** on the lite version being fully React 19 tested — verify by `npm install --dry-run` before adopting. |
+| `tailwindcss@4.x` | OKLCH color values in `@theme` | Works. Tailwind v4 ships with full OKLCH support in the color engine. |
+| `sharp` (bundled) | Fly.io Linux/glibc | Works but may need `SHARP_IGNORE_GLOBAL_LIBVIPS=1` env var. |
+| `motion@12.38.0` | Gallery grid stagger animation | Works. `staggerChildren` via `variants` prop enables the scroll-reveal wave for 31 cards. Already used in `AnimatedSection.tsx`. |
+
+## Answers to Downstream Questions
+
+**Q1: Montserrat + Inter pairing via next/font — confirmed?**
+YES. Import both from `next/font/google`, expose two CSS variables (`--font-inter`, `--font-montserrat`), apply both classNames to the `<html>` element, and reference them from Tailwind utilities (`font-sans` for body, `font-display` for headings). No new dependencies. Pattern is identical to the existing Inter setup.
+
+**Q2: Lightbox library — needed?**
+NO, **not required**. `@base-ui/react@1.3.0` (already in package.json) ships a `Dialog` primitive that is fully sufficient for click-to-enlarge behaviour on gallery assets. Use `Dialog.Root` + `Dialog.Backdrop` + `Dialog.Portal` + `Dialog.Popup`. If the milestone later demands swipe-to-advance-between-assets, add `yet-another-react-lightbox-lite` (~5 KB gzip, MIT) — but start without it.
+
+**Q3: Next.js Image best practices for 31 local PNGs?**
+- Place assets under `src/assets/designs/` (NOT `public/`) and use static ES imports
+- Always pass `sizes` attribute to avoid over-fetching on mobile
+- Default `loading="lazy"` is perfect for a gallery — do not override
+- Use `placeholder="blur"` (blurDataURL auto-generated from static import)
+- Use `preload={true}` sparingly and ONLY for the hero LCP image (the word `priority` is deprecated in Next.js 16)
+- Add `images.formats: ['image/avif', 'image/webp']` to `next.config.js`
+
+**Q4: What NOT to add?**
+- No `react-image-lightbox` (abandoned)
+- No `framer-motion` rename import (already using `motion/react`)
+- No full `yet-another-react-lightbox` (v3 with plugin ecosystem is overkill for this scope)
+- No masonry library (CSS Grid handles uniform gallery layouts)
+- No `priority` prop on any `<Image>` (deprecated in Next.js 16)
 
 ## Sources
 
-- [Next.js 16 Release Blog](https://nextjs.org/blog/next-16) — published October 21, 2025
-- [Next.js 15.5 Release Blog](https://nextjs.org/blog/next-15-5) — version history and upgrade path
-- [Next.js npm page](https://www.npmjs.com/package/next) — version 16.2.2 current as of 2026-04-03
-- [Tailwind CSS v4 Announcement](https://tailwindcss.com/blog/tailwindcss-v4) — stable January 22, 2025
-- [Tailwind CSS Next.js Install Guide](https://tailwindcss.com/docs/guides/nextjs) — official PostCSS setup
-- [Motion for React (Get Started)](https://motion.dev/docs/react) — canonical docs for the renamed library
-- [framer-motion npm](https://www.npmjs.com/package/framer-motion) — version 12.38.0, active as of 2026-04-03
-- [shadcn/ui Tailwind v4 docs](https://ui.shadcn.com/docs/tailwind-v4) — February 2025 support confirmed
-- [shadcn/ui Changelog February 2025](https://ui.shadcn.com/docs/changelog/2025-02-tailwind-v4)
-- [Next.js Font Optimization Docs](https://nextjs.org/docs/app/getting-started/fonts)
-- [Vercel vs Netlify Comparison — Codecademy](https://www.codecademy.com/article/vercel-vs-netlify-which-one-should-you-choose)
-- [Vercel vs Netlify vs Cloudflare 2025](https://www.ai-infra-link.com/vercel-vs-netlify-vs-cloudflare-pages-2025-comparison-for-developers/)
+- **Bundled Next.js 16.2.2 docs** (authoritative, shipped with the project per `AGENTS.md` instruction):
+  - `node_modules/next/dist/docs/01-app/01-getting-started/12-images.md` — static imports, blurDataURL, local vs remote
+  - `node_modules/next/dist/docs/01-app/01-getting-started/13-fonts.md` — Google Fonts multi-font pattern, variable vs static weights
+  - `node_modules/next/dist/docs/01-app/03-api-reference/02-components/image.md` — `preload` replaces `priority`, `loading="lazy"` default, `sizes` attribute rules
+  - `node_modules/next/dist/docs/01-app/02-guides/self-hosting.md` — sharp config on Fly.io/glibc
+  - Confidence: **HIGH** (authoritative, version-matched)
+- **`@base-ui/react@1.3.0` installed `package.json` + `dialog/` directory listing** — verified Dialog primitive is present locally
+  - Confidence: **HIGH**
+- **[npm: yet-another-react-lightbox](https://www.npmjs.com/package/yet-another-react-lightbox)** — v3.30.1 (March 26 2026), MIT, React 16.8+/17/18/19
+  - Confidence: **HIGH**
+- **[yet-another-react-lightbox-lite GitHub](https://github.com/igordanchenko/yet-another-react-lightbox-lite)** — ~5 KB gzip, React 18+, MIT, actively maintained (122 commits)
+  - Confidence: **MEDIUM** (explicit React 19 peer-dep claim not verified in lite README; inferred from sibling package)
+- **[yet-another-react-lightbox Next.js integration docs](https://yet-another-react-lightbox.com/examples/nextjs)** — confirms `next/dynamic` + `next/image` pattern, note about Zoom plugin not working with `next/image`
+  - Confidence: **HIGH** (official library docs)
+- **[Montserrat on Google Fonts](https://fonts.google.com/specimen/Montserrat)** + **[Montserrat GitHub repo](https://github.com/JulietaUla/Montserrat)** — 9 static weights + variable font, latin subset
+  - Confidence: **HIGH**
+- **OKLCH conversion** — computed directly using OKLab formulas (sRGB → linear RGB → LMS cube-root → OKLab → OKLCH polar), verified against expected zero-chroma for pure greys
+  - Confidence: **HIGH**
+- **Design asset inventory** — `find` on `.planning/design-references/My Designs/` confirmed 31 files (29 PNG + 2 PDF), 49 MB total, across 6 category folders
+  - Confidence: **HIGH** (direct filesystem inspection)
+- **[yet-another-react-lightbox Releases](https://github.com/igordanchenko/yet-another-react-lightbox/releases)** — latest v3.30.1 on 2026-03-26
+  - Confidence: **HIGH**
+
+---
+*Stack research for: v2.0 Brand Redesign & Creative Portfolio milestone*
+*Researched: 2026-04-04*
