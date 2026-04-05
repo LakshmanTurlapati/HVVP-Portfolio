@@ -10,9 +10,11 @@ export interface Metric {
 
 export interface HeroData {
   name: string
-  tagline: string
+  heading: string
+  subheading: string
   availability: string
   metrics: Metric[]
+  ctaPrimary: { label: string; href: string }
   ctaResume: string
   ctaContact: string
 }
@@ -56,8 +58,19 @@ export interface AboutData {
 }
 
 export interface ContactData {
+  heading: string
   email: string
   linkedIn: string
   resumePdf: string
   phone?: string
+}
+
+export interface ValuePropItem {
+  text: string
+}
+
+export interface ValuePropData {
+  heading: string
+  opener: string
+  items: ValuePropItem[]
 }

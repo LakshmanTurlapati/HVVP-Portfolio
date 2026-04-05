@@ -9,6 +9,7 @@ import AboutSection from '@/components/sections/AboutSection'
 import ExperienceSection from '@/components/sections/ExperienceSection'
 import SkillsSection from '@/components/sections/SkillsSection'
 import LeadershipSection from '@/components/sections/LeadershipSection'
+import ValuePropSection from '@/components/sections/ValuePropSection'
 import ContactSection from '@/components/sections/ContactSection'
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <AnimatedSection><ExperienceSection /></AnimatedSection>
       <AnimatedSection><SkillsSection /></AnimatedSection>
       <AnimatedSection><LeadershipSection /></AnimatedSection>
+      <AnimatedSection><ValuePropSection /></AnimatedSection>
       <AnimatedSection><ContactSection /></AnimatedSection>
     </>
   )

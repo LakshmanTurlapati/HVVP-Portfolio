@@ -1,6 +1,6 @@
 // src/components/sections/ContactSection.tsx
 // Server Component -- no "use client" directive
-// Centered layout: email + LinkedIn as primary CTAs, phone as subdued text
+// "Let's Connect" heading + email + LinkedIn CTAs + phone
 
 import { contactData } from '@/data/contact'
 import { heroData } from '@/data/hero'
@@ -9,20 +9,20 @@ import { cn } from '@/lib/utils'
 
 export default function ContactSection() {
   return (
-    <section id="contact" aria-label="Contact" className="py-20 bg-card">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+    <section id="contact" aria-label="Contact" className="py-24 bg-background">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
 
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Get In Touch</h2>
-        <div className="w-12 h-1 bg-accent mb-6 rounded-full mx-auto" />
+        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">{contactData.heading}</h2>
+        <div className="w-16 h-1 bg-accent mb-8 rounded-full mx-auto" />
 
-        <p className="text-muted-foreground mb-8 text-sm sm:text-base">
+        <p className="text-muted-foreground mb-10 text-base sm:text-lg">
           {heroData.availability}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href={`mailto:${contactData.email}`}
-            className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-accent-foreground hover:bg-accent/90')}
+            className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-accent-foreground hover:bg-accent-hover font-semibold')}
           >
             Email Me
           </a>
@@ -37,7 +37,7 @@ export default function ContactSection() {
         </div>
 
         {contactData.phone && (
-          <p className="mt-6 text-sm text-muted-foreground">
+          <p className="mt-8 text-sm text-muted-foreground">
             {contactData.phone}
           </p>
         )}
