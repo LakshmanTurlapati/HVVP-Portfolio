@@ -6,12 +6,13 @@ import { cn } from "@/lib/utils"
 import { Menu, X } from "lucide-react"
 
 const NAV_LINKS = [
-  { id: "hero",       label: "Home"       },
-  { id: "about",      label: "About"      },
-  { id: "experience", label: "Experience" },
-  { id: "skills",     label: "Skills"     },
-  { id: "leadership", label: "Leadership" },
-  { id: "contact",    label: "Contact"    },
+  { id: "hero",           label: "Home"    },
+  { id: "about",          label: "About"   },
+  { id: "case-study-utd", label: "UTD"     },
+  { id: "case-study-rio", label: "Rio"     },
+  { id: "gallery",        label: "Work"    },
+  { id: "value-prop",     label: "Approach"},
+  { id: "contact",        label: "Contact" },
 ] as const
 
 export default function Navbar() {
@@ -23,10 +24,10 @@ export default function Navbar() {
       aria-label="Main navigation"
       className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-muted"
     >
-      <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         <span className="font-semibold text-sm tracking-wide text-foreground">HV</span>
 
-        <ul className="hidden md:flex items-center gap-6" role="list">
+        <ul className="hidden md:flex items-center gap-5 lg:gap-7" role="list">
           {NAV_LINKS.map((link) => (
             <li key={link.id}>
               <a
@@ -34,7 +35,7 @@ export default function Navbar() {
                 className={cn(
                   "text-sm transition-colors duration-150",
                   activeSection === link.id
-                    ? "text-accent font-medium"
+                    ? "text-foreground font-semibold border-b-2 border-accent pb-0.5"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -70,8 +71,8 @@ export default function Navbar() {
                   className={cn(
                     "block text-sm transition-colors duration-150",
                     activeSection === link.id
-                      ? "text-accent font-medium"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-foreground font-semibold border-l-2 border-accent pl-3"
+                      : "text-muted-foreground hover:text-foreground pl-3"
                   )}
                 >
                   {link.label}

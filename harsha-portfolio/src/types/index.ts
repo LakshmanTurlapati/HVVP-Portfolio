@@ -19,15 +19,6 @@ export interface HeroData {
   ctaContact: string
 }
 
-export interface ExperienceEntry {
-  role: string
-  company: string
-  location: string
-  startDate: string
-  endDate: string | 'Present'
-  bullets: string[]
-}
-
 export interface EducationEntry {
   degree: string
   field: string
@@ -36,21 +27,6 @@ export interface EducationEntry {
   graduationDate: string
   honors?: string
   coursework?: string[]
-}
-
-export interface SkillsData {
-  marketingAnalytics: string[]
-  toolsPlatforms: string[]
-  certifications: string[]
-}
-
-export interface LeadershipEntry {
-  organization: string
-  role: string
-  startDate: string
-  endDate: string | 'Present'
-  description: string
-  location?: string
 }
 
 export interface AboutData {
