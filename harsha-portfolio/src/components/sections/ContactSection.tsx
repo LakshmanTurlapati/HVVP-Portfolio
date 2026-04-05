@@ -22,7 +22,7 @@ export default function ContactSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href={`mailto:${contactData.email}`}
-            className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-white hover:bg-accent/90')}
+            className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-accent-foreground hover:bg-accent/90')}
           >
             Email Me
           </a>

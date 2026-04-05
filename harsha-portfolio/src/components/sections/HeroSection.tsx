@@ -23,7 +23,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 mb-16 justify-center sm:justify-start">
             <a
               href="#contact"
-              className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-white hover:bg-accent/90')}
+              className={cn(buttonVariants({ size: 'lg' }), 'bg-accent text-accent-foreground hover:bg-accent/90')}
             >
               {heroData.ctaContact}
             </a>
