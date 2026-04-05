@@ -191,23 +191,66 @@ Explicitly excluded. Documented to prevent scope creep.
 
 Which phases cover which requirements. Filled during roadmap creation.
 
+### v2.0 Milestone
+
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BRAND-01..07 | TBD | Pending |
-| HERO-06..10 | TBD | Pending |
-| ABOUT-03..04 | TBD | Pending |
-| CASE-01..07 | TBD | Pending |
-| GAL-01..10 | TBD | Pending |
-| VAL-01..03 | TBD | Pending |
-| CONT-04..05 | TBD | Pending |
-| NAV-05..07 | TBD | Pending |
-| POL-08..14 | TBD | Pending |
+| BRAND-01 | Phase 5 | Pending |
+| BRAND-02 | Phase 5 | Pending |
+| BRAND-03 | Phase 5 | Pending |
+| BRAND-04 | Phase 5 | Pending |
+| BRAND-05 | Phase 5 | Pending |
+| BRAND-06 | Phase 5 | Pending |
+| BRAND-07 | Phase 5 | Pending |
+| HERO-06 | Phase 6 | Pending |
+| HERO-07 | Phase 6 | Pending |
+| HERO-08 | Phase 6 | Pending |
+| HERO-09 | Phase 6 | Pending |
+| HERO-10 | Phase 6 | Pending |
+| ABOUT-03 | Phase 6 | Pending |
+| ABOUT-04 | Phase 6 | Pending |
+| VAL-01 | Phase 6 | Pending |
+| VAL-02 | Phase 6 | Pending |
+| VAL-03 | Phase 6 | Pending |
+| CONT-04 | Phase 6 | Pending |
+| CONT-05 | Phase 6 | Pending |
+| CASE-01 | Phase 7 | Pending |
+| CASE-02 | Phase 7 | Pending |
+| CASE-03 | Phase 7 | Pending |
+| CASE-04 | Phase 7 | Pending |
+| CASE-05 | Phase 7 | Pending |
+| CASE-06 | Phase 7 | Pending |
+| CASE-07 | Phase 7 | Pending |
+| GAL-01 | Phase 8 | Pending |
+| GAL-02 | Phase 8 | Pending |
+| GAL-03 | Phase 8 | Pending |
+| GAL-04 | Phase 8 | Pending |
+| GAL-05 | Phase 8 | Pending |
+| GAL-06 | Phase 8 | Pending |
+| GAL-07 | Phase 8 | Pending |
+| GAL-08 | Phase 8 | Pending |
+| GAL-09 | Phase 8 | Pending |
+| GAL-10 | Phase 8 | Pending |
+| NAV-05 | Phase 9 | Pending |
+| NAV-06 | Phase 9 | Pending |
+| NAV-07 | Phase 9 | Pending |
+| POL-08 | Phase 10 | Pending |
+| POL-09 | Phase 10 | Pending |
+| POL-10 | Phase 10 | Pending |
+| POL-11 | Phase 10 | Pending |
+| POL-12 | Phase 10 | Pending |
+| POL-13 | Phase 10 | Pending |
+| POL-14 | Phase 10 | Pending |
 
 **Coverage:**
-- v2.0 requirements: 47 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 47 (to be filled during roadmap creation)
+- v2.0 requirements: 46 total
+- Mapped to phases: 46
+- Unmapped: 0
+
+### v1.0 Milestone (completed)
+
+All 35 v1.0 requirements mapped to Phases 1-4 -- see ROADMAP.md for details.
 
 ---
 *Requirements defined: 2026-04-03 (v1.0), 2026-04-04 (v2.0)*
-*Last updated: 2026-04-04 -- v2.0 requirements drafted from brief + research*
+*Last updated: 2026-04-04 -- v2.0 requirements mapped to Phases 5-10*
