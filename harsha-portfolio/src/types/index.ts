@@ -74,3 +74,24 @@ export interface ValuePropData {
   opener: string
   items: ValuePropItem[]
 }
+
+export interface CaseStudyBlock {
+  label: string
+  body: string
+}
+
+export interface CaseStudyResult {
+  value: string
+  label: string
+}
+
+export interface CaseStudyData {
+  slug: string
+  title: string
+  client: string
+  role: string
+  timeframe: string
+  description: string
+  blocks: CaseStudyBlock[]
+  result: CaseStudyResult
+}
