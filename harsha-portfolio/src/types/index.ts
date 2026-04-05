@@ -95,3 +95,28 @@ export interface CaseStudyData {
   blocks: CaseStudyBlock[]
   result: CaseStudyResult
 }
+
+export interface GalleryAsset {
+  slug: string
+  title: string
+  client: string
+  src: string
+  width: number
+  height: number
+  alt: string
+  isPdf?: boolean
+  pdfHref?: string
+}
+
+export interface GalleryCategory {
+  slug: string
+  label: string
+  aspectRatio: string
+  assets: GalleryAsset[]
+}
+
+export interface GalleryData {
+  intro: string
+  closing: string
+  categories: GalleryCategory[]
+}

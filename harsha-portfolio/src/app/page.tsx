@@ -11,6 +11,7 @@ import SkillsSection from '@/components/sections/SkillsSection'
 import LeadershipSection from '@/components/sections/LeadershipSection'
 import ValuePropSection from '@/components/sections/ValuePropSection'
 import CaseStudySection from '@/components/sections/CaseStudySection'
+import GallerySection from '@/components/sections/GallerySection'
 import { caseStudyUtd } from '@/data/caseStudyUtd'
 import { caseStudyRio } from '@/data/caseStudyRio'
 import ContactSection from '@/components/sections/ContactSection'
@@ -22,6 +23,7 @@ export default function Home() {
       <AnimatedSection><AboutSection /></AnimatedSection>
       <AnimatedSection><CaseStudySection data={caseStudyUtd} /></AnimatedSection>
       <AnimatedSection><CaseStudySection data={caseStudyRio} /></AnimatedSection>
+      <AnimatedSection><GallerySection /></AnimatedSection>
       <AnimatedSection><ExperienceSection /></AnimatedSection>
       <AnimatedSection><SkillsSection /></AnimatedSection>
       <AnimatedSection><LeadershipSection /></AnimatedSection>
