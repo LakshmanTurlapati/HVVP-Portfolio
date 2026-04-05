@@ -8,19 +8,10 @@ A single-page portfolio website for Harsha Vardhini Veeravalli Prabu, a data-dri
 
 A polished, professional online presence that makes hiring managers want to reach out -- clear narrative, strong credentials (University Gold Medalist, measurable marketing results), visible body of creative work, easy contact.
 
-## Current Milestone: v2.0 Brand Redesign & Creative Portfolio
+## Completed Milestones
 
-**Goal:** Revamp the portfolio's visual identity around Harsha's own design language (DeepBlack + Orange + Montserrat), add two marketing case studies, and showcase 31 real design assets -- repositioning her from "data-driven marketer with numbers" to "strategist + creator with a visible body of work."
-
-**Target features:**
-- New design system (DeepBlack #0F0F0F, Orange #FF6A00 / #FFA559, White #F9F9F9, Montserrat Bold headings)
-- Rebuilt Hero with new copy and 3 metric cards
-- Rewritten About Me using brief-supplied copy verbatim
-- Case Study 1: UTD International Center Campaign (5-block structure)
-- Case Study 2: Rio Jiu Jitsu Marketing Strategy (5-block structure)
-- Creative Work gallery: 31 assets across 6 categories with titles
-- "What I Bring to the Table" skills block (brief copy)
-- Redesigned Contact section ("Let's Connect")
+- **v1.0 (2026-04-04)** -- Initial portfolio with Hero, About, Experience, Skills, Leadership, Contact on muted-neutral design system. 4 phases, 10 plans, 35 requirements. Deployed to Vercel + Fly.io.
+- **v2.0 (2026-04-05)** -- Brand Redesign & Creative Portfolio. DeepBlack/Orange/Montserrat redesign + two case studies + 31-asset gallery + ValueProp section. 6 phases (5-10), ~15 commits, 46 requirements. Code-complete; Lighthouse/LCP deploy-time verification pending with user.
 
 ## Requirements
 
@@ -41,17 +32,22 @@ A polished, professional online presence that makes hiring managers want to reac
 - Clean minimal design with neutral base and one muted accent color -- Validated in Phase 1 (v1.0); **superseded by v2.0 brand redesign**
 - SEO-optimized metadata for discoverability -- Validated in Phase 1 (v1.0)
 - Live production deployment -- Validated in Phase 4 (v1.0)
+- Harsha's personal brand palette (DeepBlack #0F0F0F, Orange #FF6A00/#FFA559, White #F9F9F9) in Tailwind v4 @theme -- Validated in Phase 5 (v2.0)
+- Montserrat Bold display typography scoped to H1/H2 with Inter for body -- Validated in Phase 5 (v2.0)
+- Accent usage audited across 23 call-sites with WCAG AA verdict per site -- Validated in Phase 5 (v2.0)
+- Hero rebuilt with brief-supplied copy, 3 metric cards, View My Work CTA -- Validated in Phase 6 (v2.0)
+- About rewritten with brief-supplied bio + inline credential callout -- Validated in Phase 6 (v2.0)
+- "What I Bring to the Table" section on DeepBlack band with orange heading -- Validated in Phase 6 (v2.0)
+- Contact section redesigned with "Let's Connect" heading -- Validated in Phase 6 (v2.0)
+- Two case studies (UTD + Rio) in 5-block structure via Data-as-Prop component -- Validated in Phase 7 (v2.0)
+- Creative Work gallery: 31 assets across 6 categories with accessible lightbox -- Validated in Phase 8 (v2.0)
+- next/image pipeline with AVIF/WebP + mandatory sizes attribute -- Validated in Phase 8 (v2.0)
+- Navbar rewired to v2.0 section lineup; v1.0 Experience/Skills/Leadership sections retired -- Validated in Phase 9 (v2.0)
+- New OG image (v2) + Twitter card images added -- Validated in Phase 10 (v2.0)
 
 ### Active
 
-- [ ] Adopt Harsha's personal brand palette (DeepBlack, Orange, White) across the site
-- [ ] Adopt Montserrat Bold for display typography while keeping Inter for body
-- [ ] Rebuild Hero with brief-supplied copy, metric cards, and primary CTA
-- [ ] Rewrite About Me with brief-supplied copy
-- [ ] Add two case study sections with 5-block structure (Description / Context / What I Did / Execution / Results)
-- [ ] Add Creative Work gallery displaying 31 assets grouped by 6 categories with titles
-- [ ] Add "What I Bring to the Table" section
-- [ ] Redesign Contact section with "Let's Connect" heading
+(None -- v2.0 milestone complete; Lighthouse + LCP deploy-time verification pending with user)
 
 ### Out of Scope
 
@@ -74,11 +70,11 @@ A polished, professional online presence that makes hiring managers want to reac
 
 ## Constraints
 
-- **Tech stack**: React/Next.js -- modern, extensible, good for future enhancements
-- **Design system**: Clean minimal aesthetic -- white/off-white/light gray base, dark text, one muted accent color (muted blue, soft green, or warm beige), sans-serif typography (Inter preferred)
-- **Layout**: Single scrollable page with section-based navigation, grid layout with consistent spacing
-- **Content**: Resume-sourced data only -- no placeholder or fabricated content
-- **Accessibility**: Must be navigable and readable on all common devices and screen sizes
+- **Tech stack**: Next.js 16 + React 19 + TypeScript + Tailwind v4 + shadcn/ui + motion/react + @base-ui/react (lightbox)
+- **Design system (v2.0)**: Harsha's personal brand -- DeepBlack #0F0F0F, Orange #FF6A00 / #FFA559, White #F9F9F9; Montserrat Bold for H1/H2, Inter for body; WCAG 2.2 AA compliant
+- **Layout**: Single scrollable page -- Hero -> About -> UTD case study -> Rio case study -> Gallery -> ValueProp -> Contact
+- **Content**: Resume + brief-supplied copy; 31 real design assets + 2 case study narratives
+- **Accessibility**: WCAG 2.2 AA body text contrast; 3:1 UI contrast; orange text only on DeepBlack surfaces or ≥24px display; prefers-reduced-motion at JS level
 
 ## Key Decisions
 
@@ -111,4 +107,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-04 -- milestone v2.0 kickoff (Brand Redesign & Creative Portfolio)*
+*Last updated: 2026-04-05 -- milestone v2.0 complete (Brand Redesign & Creative Portfolio)*
