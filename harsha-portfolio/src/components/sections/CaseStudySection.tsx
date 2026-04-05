@@ -13,7 +13,8 @@ export default function CaseStudySection({ data }: CaseStudySectionProps) {
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <p className="text-xs font-semibold text-accent uppercase tracking-[0.2em] mb-3">
+        <p className="text-xs font-bold text-foreground uppercase tracking-[0.2em] mb-3 inline-flex items-center gap-2">
+          <span className="w-6 h-0.5 bg-accent" aria-hidden="true" />
           Case Study
         </p>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2 leading-tight">
@@ -49,7 +50,7 @@ export default function CaseStudySection({ data }: CaseStudySectionProps) {
               key={block.label}
               className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-10"
             >
-              <p className="text-sm font-semibold text-accent uppercase tracking-wider md:pt-1">
+              <p className="text-xs font-bold text-foreground uppercase tracking-[0.15em] md:pt-1 border-l-2 border-accent pl-3 md:border-l-0 md:pl-0 md:border-t-2 md:pt-3 md:w-fit">
                 {block.label}
               </p>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">

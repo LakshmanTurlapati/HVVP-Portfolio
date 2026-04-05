@@ -18,31 +18,32 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://harshavardhini.com'),
-  title: 'Harsha Vardhini Veeravalli Prabu | Digital Marketing Professional',
+  title: 'Harsha Vardhini Veeravalli Prabu | Data-Driven Marketing Strategist',
   description:
-    'Data-driven digital marketing professional specializing in SEO, social media, and campaign optimization. University Gold Medalist. MS Marketing at UT Dallas.',
+    'Data-driven marketing strategist. Content and campaigns that convert. University Gold Medalist. MS Marketing at UT Dallas.',
   openGraph: {
-    title: 'Harsha Vardhini | Digital Marketing Professional',
+    title: 'Harsha Vardhini | Data-Driven Marketing Strategist',
     description:
-      'SEO, SEM, social media, and campaign optimization specialist. Open to full-time marketing roles in the US.',
+      'Content and campaigns that convert. MS Marketing at UT Dallas. 30+ marketing assets created and shipped.',
     url: 'https://harshavardhini.com',
     siteName: 'Harsha Vardhini Portfolio',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image-v2.png',
         width: 1200,
         height: 630,
-        alt: 'Harsha Vardhini Veeravalli Prabu -- Digital Marketing Professional',
+        alt: 'Harsha Vardhini Veeravalli Prabu -- Data-Driven Marketing Strategist',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Harsha Vardhini | Digital Marketing Professional',
+    title: 'Harsha Vardhini | Data-Driven Marketing Strategist',
     description:
-      'SEO, SEM, and campaign optimization specialist. MS Marketing at UT Dallas.',
+      'Content and campaigns that convert. MS Marketing at UT Dallas.',
+    images: ['/og-image-v2.png'],
   },
   alternates: { canonical: 'https://harshavardhini.com' },
 }
@@ -53,9 +54,9 @@ const jsonLd = {
   name: 'Harsha Vardhini Veeravalli Prabu',
   url: 'https://harshavardhini.com',
   email: 'harshavprabu@gmail.com',
-  jobTitle: 'Digital Marketing Professional',
+  jobTitle: 'Data-Driven Marketing Strategist',
   description:
-    'Data-driven digital marketing professional specializing in SEO, social media, and campaign optimization.',
+    'Data-driven marketing strategist specializing in content and campaign optimization across social media, web, and email.',
   alumniOf: [
     {
       '@type': 'CollegeOrUniversity',
