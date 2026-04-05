@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import { Dialog } from '@base-ui/react/dialog'
 import type { GalleryAsset } from '@/types'
+import { getThumb } from '@/data/galleryThumbs.generated'
 
 interface GalleryGridClientProps {
   assets: GalleryAsset[]
@@ -40,7 +41,9 @@ export default function GalleryGridClient({ assets, aspectRatio }: GalleryGridCl
   return (
     <>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {assets.map((item, index) => (
+        {assets.map((item, index) => {
+          const thumb = getThumb(item.src)
+          return (
           <li key={item.slug} className="group">
             <button
               type="button"
@@ -53,12 +56,14 @@ export default function GalleryGridClient({ assets, aspectRatio }: GalleryGridCl
                 style={{ aspectRatio }}
               >
                 <Image
-                  src={item.src}
+                  src={thumb?.thumbSrc ?? item.src}
                   alt={item.alt}
                   fill
-                  sizes="(max-width: 768px) 828px, 1080px"
-                  quality={85}
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  placeholder={thumb ? "blur" : "empty"}
+                  blurDataURL={thumb?.blurDataURL}
                   loading="eager"
+                  unoptimized={!!thumb}
                   className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                 />
                 {item.isPdf && (
@@ -76,7 +81,8 @@ export default function GalleryGridClient({ assets, aspectRatio }: GalleryGridCl
               </div>
             </button>
           </li>
-        ))}
+          )
+        })}
       </ul>
 
       <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
