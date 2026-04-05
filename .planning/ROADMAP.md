@@ -103,7 +103,10 @@ Plans:
   3. The keyboard skip-link, when focused, is readable against a DeepBlack background with white text (not orange on white) and passes 4.5:1 contrast
   4. Every pre-existing accent-prefixed class usage across the codebase either passes WCAG 2.2 AA contrast in its new Orange form or has been rewritten to a compliant alternative -- documented in an audit log
   5. Orange never appears as body paragraph text or as white-on-orange button labels anywhere on the site
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 05-01-PLAN.md -- @theme palette migration to v2.0 brand (OKLCH) + Montserrat variable font + shadcn token expansion (card, border, input, ring, accent-foreground)
+- [ ] 05-02-PLAN.md -- 27-usage accent audit doc + skip-link rewrite (focus:bg-foreground focus:text-background) + CTA button label rewrites (text-white -> text-accent-foreground)
 **UI hint**: yes
 
 ### Phase 6: Content Sections Rebuild
@@ -181,7 +184,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 2. Content Sections | 3/3 | Complete | 2026-04-03 |
 | 3. Navigation | 1/1 | Complete | 2026-04-03 |
 | 4. Polish + Launch | 2/2 | Complete | 2026-04-04 |
-| 5. Design Token Foundation | 0/? | Not started | - |
+| 5. Design Token Foundation | 0/2 | Not started | - |
 | 6. Content Sections Rebuild | 0/? | Not started | - |
 | 7. Case Studies | 0/? | Not started | - |
 | 8. Creative Work Gallery | 0/? | Not started | - |
