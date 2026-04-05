@@ -7,17 +7,31 @@
 @theme {
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, sans-serif;
 
-  /* Colors */
-  --color-background: oklch(0.99 0.00 0);
-  --color-foreground: oklch(0.15 0.01 260);
-  --color-accent: oklch(0.55 0.10 240);
-  --color-accent-hover: oklch(0.48 0.12 240);
-  --color-muted: oklch(0.93 0.00 0);
-  --color-muted-foreground: oklch(0.45 0.01 260);
-  --color-card: oklch(0.97 0.00 0);
+  /* Brand palette -- Harsha v2.0 (STACK.md precise OKLCH values) */
+  --color-brand-black: oklch(0.1684 0 0);                /* #0F0F0F DeepBlack */
+  --color-brand-orange: oklch(0.7009 0.2012 44.77);      /* #FF6A00 primary accent */
+  --color-brand-orange-soft: oklch(0.7976 0.1404 58.86); /* #FFA559 hover/highlight */
+  --color-brand-white: oklch(0.9821 0 0);                /* #F9F9F9 off-white background */
 
-  /* Border radius */
+  /* Semantic tokens mapped to brand palette */
+  --color-background: var(--color-brand-white);
+  --color-foreground: var(--color-brand-black);
+  --color-accent: var(--color-brand-orange);
+  --color-accent-foreground: var(--color-brand-black);   /* BRAND-03: DeepBlack text on orange fill -- only safe combo */
+  --color-accent-hover: var(--color-brand-orange-soft);
+  --color-muted: oklch(0.95 0 0);
+  --color-muted-foreground: oklch(0.35 0 0);             /* darkened to guarantee 4.5:1 on off-white */
+
+  /* shadcn full token expansion (BRAND-03 -- prevents silent regressions) */
+  --color-card: oklch(1 0 0);                             /* pure white card on off-white background */
+  --color-card-foreground: var(--color-brand-black);
+  --color-border: oklch(0.90 0 0);                        /* light grey hairline */
+  --color-input: oklch(0.90 0 0);
+  --color-ring: var(--color-brand-orange);                /* focus ring = brand orange (3:1 UI threshold on DeepBlack) */
+
+  /* Border radius (unchanged from v1.0) */
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -43,6 +57,11 @@ body {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
+  }
+  /* v2.0 BRAND-07: Montserrat scoped to display headings only. H3+ stay Inter. */
+  h1, h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
   }
 }
 
