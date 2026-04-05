@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Source materials (kept locally, not in git)
+*.zip
+*.rxr
+/Harsha Vardhini Veeravalli Prabu - Marketing Resume.pdf
+/Portfolio Redesign Brief - Harsha.docx
+/frrl free to use inspiration from all of this combined.. but not just one.rxr
+
+# Design source assets (extracted from zip; used assets are in harsha-portfolio/public/gallery/)
+/.planning/design-references/
+/My Designs/
