@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useActiveSection } from "@/hooks/useActiveSection"
 import { cn } from "@/lib/utils"
 import { Menu, X } from "lucide-react"
+import ThemeToggle from "@/components/layout/ThemeToggle"
 
 const NAV_LINKS = [
   { id: "hero",           label: "Home"    },
@@ -45,16 +46,19 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <button
-          type="button"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          onClick={() => setMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 -mr-2 text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-1 -mr-2">
+          <ThemeToggle />
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
